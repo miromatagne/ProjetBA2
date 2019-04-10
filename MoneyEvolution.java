@@ -8,34 +8,24 @@ public class MoneyEvolution extends Thread{
 	
     public Player p;
     public Window window;
-	public GameObject obj;
-	public String key = "clé";
+	public String key = "cle";
+	public Ordi o;
 	public ArrayList<GameObject> objects;
 	
-	public MoneyEvolution(Player p, Window wind, GameObject obj, ArrayList<GameObject> objects) {
-	
+	public MoneyEvolution(Player p, Ordi o) {
 		this.p=p;
-		this.window=wind;
-		this.obj=obj;
-		this.objects=objects;
-		
-
-		
+		this.o = o;
 	}
-	// rappel un thread n'est pas une boucle
 	public void run() {
-		synchronized(key) {// le syncrhonized permet d'éviter qu'en cliquant plusieurs fois sur l'ordi plusieurs threads de type MoneyEvolution se lance en même temps
-		if(obj instanceof Ordi) {                             // toutefois le synchronized empêche de couper du bois et de faire de l'ordinateur en même tps    
-			while(obj.isAtPosition(p.getFrontX(), p.getFrontY())) {
-				((Ordi)obj).makeMoney(p);
-				window.update();
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		synchronized(key) {                               
+		while(o.isAtPosition(p.getFrontX(), p.getFrontY())) {
+			((Ordi)o).makeMoney(p);			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				
 		
 	
@@ -43,22 +33,22 @@ public class MoneyEvolution extends Thread{
 			}
 		}
 		
-		else if(obj instanceof Three) {
+		/*else if(obj instanceof Three) {
 			while(obj.isAtPosition(p.getFrontX(), p.getFrontY()) && (((Three)obj).getPV())>=0) {
-				((Three)obj).cut(p,objects);                                // si l'objet de type gain s'avère être un arbre, c'est ceci qui s'effectuera. 
-				System.out.println("Sa vie vaut"+((Three)obj).getPV());     // cut diminue la vie de l'arbe et si celui-ci est mort cad sa vie vaut 0, 
-				window.update();                                            // alors l'abre est être détruit et le joueur gagne 50 de money
-				try {                                                       // Pour supprimer l'arbre, on le retire de la liste des objets a reprsentés et on 
-					Thread.sleep(500);                                      // et on update la window, qui redescine tout sans l'arbre.
-					                                                        // cut ne détruit l'arbre que si sa vie est nulle, si sa vie est non nulle
-				} catch (InterruptedException e) {                          // il ne fait qu'en diminuer la vie, tant que le joueur est devant l'arbre         
-					// TODO Auto-generated catch block                      // et que la vie est non nulle, on diminue la vie de l'arbre en appliquant cut
-					e.printStackTrace();                                    // en boucle grace au while. Le thread sleep, met un tps d'attente entre chaque 
-				}                                                           // perte de vie
+				((Three)obj).cut(p,objects);                               
+										
+				//window.update();                                            
+				try {                                                      
+					Thread.sleep(500);                                      
+					                                                        
+				} catch (InterruptedException e) {                                  
+					// TODO Auto-generated catch block                      
+					e.printStackTrace();                                    
+				}                                                           
 				
 			}
 			
-		}
+		} */
 		}
 		
 		
@@ -74,6 +64,5 @@ public class MoneyEvolution extends Thread{
 		
 	
 	
-}
 
 

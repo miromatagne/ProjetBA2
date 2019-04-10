@@ -1,11 +1,12 @@
 package Model;
 
-public class Ordi extends GameObject implements Gain{
+public class Ordi extends BlockUnbreakable implements Gain,Activable {
 
 
 	protected int posX;
 	protected int posY;
 	protected int color;
+	Player active_player;
 	protected static int rapporte = 10;
 	
 
@@ -22,7 +23,7 @@ public class Ordi extends GameObject implements Gain{
 
 	
 	public void makeMoney(Player p) {
-		p.setMoney(rapporte);
+		p.addMoney(rapporte);
 	}
 
 
@@ -31,6 +32,22 @@ public class Ordi extends GameObject implements Gain{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
+	@Override
+	public void activate() {
+		System.out.println(active_player.color);
+		Thread t3 = new Thread(new MoneyEvolution(active_player, this));
+		t3.start();
+	}
+
+
+	@Override
+	public void updateActivePlayer(Player active_player) {
+		this.active_player = active_player;
+	}
+
+
 
 }
 

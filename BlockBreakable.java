@@ -5,9 +5,10 @@ import java.util.ArrayList;
 public class BlockBreakable extends Block implements Deletable, Activable {
 
     private ArrayList<DeletableObserver> observers = new ArrayList<DeletableObserver>(); //liste de blocs
+    protected Player active_player;
     private int lifepoints = 0;
-    public BlockBreakable(int X, int Y, int lifepoints) { //X,Y = position du bloc, lifepoints = "vie" du bloc avant qu'il se détruise
-        super(X, Y, 1);
+    public BlockBreakable(int X, int Y, int couleur, int lifepoints) { //X,Y = position du bloc, lifepoints = "vie" du bloc avant qu'il se détruise
+        super(X, Y, couleur);
         this.lifepoints = lifepoints; 
     }
     
@@ -23,6 +24,7 @@ public class BlockBreakable extends Block implements Deletable, Activable {
 
 
     public void crush(){
+    	System.out.println("C");
         notifyDeletableObserver(); //On appelle la méthode qui va détruire le bloc
     }
     // //////////////////////////////////////////////////////////////////////////////////////
@@ -37,6 +39,7 @@ public class BlockBreakable extends Block implements Deletable, Activable {
     public void notifyDeletableObserver() {
     	//Supprime les blocs qui sont supprimables.
         int i = 0;
+        System.out.println(observers.size());
         for (DeletableObserver o : observers) {
             i++;
             o.delete(this, null);
@@ -52,6 +55,11 @@ public class BlockBreakable extends Block implements Deletable, Activable {
 	public boolean isAddable() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void updateActivePlayer(Player active_player) {
+		this.active_player = active_player;	
 	}
 
 }

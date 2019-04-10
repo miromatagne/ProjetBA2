@@ -75,7 +75,6 @@ public class Player extends GameObject implements Directable {
 	}
 	public void setActivePlayer() {
 		active_player = this;
-		//System.out.println(active_player.getColor());
 	}
 	public boolean isActivePlayer() {
 		return this == active_player;
@@ -92,7 +91,7 @@ public class Player extends GameObject implements Directable {
 	public int getMoney() {
 		return this.money;
 	}
-	public void setMoney(int money) {
+	public void addMoney(int money) {
 		this.money += money;
 	}
 	public boolean isAddable() {

@@ -1,21 +1,18 @@
 package Model;
 
-public class Pomme extends GameObject implements Activable {
-    Game g;
+public class Pomme extends BlockBreakable {
     int nourriture = 15;
     int vie = 10;
 	
 	
-	public Pomme(int X, int Y, int color, Game g) {
-		super(X, Y, color);
-		this.g = g;
+	public Pomme(int X, int Y, int color) {
+		super(X, Y, color, 1);
 		// TODO Auto-generated constructor stub
 	}
 	
 	public void activate() {
-		System.out.println("Je mange");
-		g.getGameObjects().remove(this);
-		g.getActivePlayer().regain(nourriture,vie);
+		this.crush();
+		active_player.regain(nourriture,vie);
 		
 	}
 
@@ -30,5 +27,7 @@ public class Pomme extends GameObject implements Activable {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
+	public void updateActivePlayer(Player active_player) {
+		this.active_player = active_player;	
+	}
 }

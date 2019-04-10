@@ -12,7 +12,7 @@ public class Mouse {
 	public void mapEvent(int x, int y) {
 		synchronized(game) {
 			game.sendPlayer(x, y);
-			game.EarnMoney(x,y);
+			//game.EarnMoney(x,y);
 			game.addtoInventory(x,y);
 		}
 	}

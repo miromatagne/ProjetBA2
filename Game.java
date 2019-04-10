@@ -10,7 +10,7 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import org.omg.CosNaming.IstringHelper;
 
-public class Game implements DeletableObserver {
+public class Game implements DeletableObserver, Observer {
     private Player active_player = null; 
     private static ArrayList<Window> windows;
     private int size;
@@ -19,7 +19,9 @@ public class Game implements DeletableObserver {
         this.windows = windows;
         Ordi o1 = new Ordi(20,20,5);
         Three T1 = new Three(10,13);
-        Pomme po = new Pomme(10,14,1,this);
+        T1.attachDeletable(this);
+        Pomme po = new Pomme(10,14,1);
+        po.attachDeletable(this);
         Window windowInit = windows.get(0);
         
         windowInit.objects.add(o1);
@@ -43,6 +45,7 @@ public class Game implements DeletableObserver {
         
         active_player = windowInit.players.get(0);
         active_player.setActivePlayer();//premier joueur actif par défaut
+        this.notifyObservers();
         Thread t1 = new Thread(new EnergyLoss(active_player,windowInit));
 		t1.start();
 
@@ -74,13 +77,13 @@ public class Game implements DeletableObserver {
         windows.get(1).objects.add(new Stairs(20, 4,windows, 1, 2, this));
         windows.get(2).objects.add(new Stairs(20, 4,windows, 2, 1, this));
         Random rand = new Random();
-        //for (int i = 0; i < numberOfBreakableBlocks; i++) {
+        //for (int i = 0; i < 40; i++) {
             //int x = rand.nextInt(size-4) + 2; //Construit les blocs cassables au sein de la map, +2 pour pas avoir de blocs le long des bords.
             //int y = rand.nextInt(size-4) + 2;
             //int lifepoints = rand.nextInt(5) + 1;
             //BlockBreakable block = new BlockBreakable(x, y, lifepoints);
             //block.attachDeletable(this);
-            //objects.add(block);
+            //getActiveWindow(windows).objects.add(block);
         //}
         for (Window window : windows) {
         	window.setGameObjects(window.objects);
@@ -149,7 +152,7 @@ public class Game implements DeletableObserver {
 
     @Override
     synchronized public void delete(Deletable ps, ArrayList<GameObject> loot) {
-    	getActiveWindow(windows).objects.remove(ps); //Permet de supprimer des objets dans la liste d'objets
+    	this.getGameObjects().remove(ps); //Permet de supprimer des objets dans la liste d'objets
         if (loot != null) {
         	getActiveWindow(windows).objects.addAll(loot);
         }
@@ -189,6 +192,7 @@ public class Game implements DeletableObserver {
 		if (change == true) {
 			active_player = pl;
 			active_player.setActivePlayer();
+			this.notifyObservers();
 			getActiveWindow(windows).setInventory(active_player.getInventory());
 			Thread t2 = new Thread(new EnergyLoss(active_player,getActiveWindow(windows)));
 			t2.start();
@@ -226,16 +230,23 @@ public class Game implements DeletableObserver {
 		// ainsi en effectuant notifyview, on redescine la map et l'inventaire, l'objet n'apparaitra alors plus sur la map, mais dans l'inventaire.
 				
 	}
+
+
+	@Override
+	public void notifyObservers() {
+		for (GameObject o : getActiveWindow(windows).objects) {
+			if (o instanceof Activable) {
+				((Activable) o).updateActivePlayer(active_player);
+			}
+		}
+	}
 	
 	
-    public void EarnMoney(int x, int y) {
-    	System.out.println("Je clique en"+x+y);
+    /*public void EarnMoney(int x, int y) {
     	for(GameObject i : getActiveWindow(windows).objects) {
     		if(i instanceof Gain)
     			if(i.isAtPosition(x, y)) {
-    				System.out.println("Ici il y a un gain");
     				if(i.isAtPosition(active_player.getFrontX(),active_player.getFrontY())){
-    					System.out.println("Je clique sur le gain");
     					Thread t3 = new Thread(new MoneyEvolution(active_player, getActiveWindow(windows),i,getActiveWindow(windows).objects));
     					t3.start();
     					
@@ -245,6 +256,6 @@ public class Game implements DeletableObserver {
   
     	}
     	
-    }
+    } */
 
 }
