@@ -1,31 +1,25 @@
 package Model;
 
-
-import java.util.ArrayList;
-import View.Window;
-
-public class MoneyEvolution extends Thread{
+public class MoneyEvolution implements Runnable{
 	
-    public Player p;
-    public Window window;
-	public String key = "cle";
-	public Ordi o;
-	public ArrayList<GameObject> objects;
+    private Player p;
+	private String key = "cle";
+	private Computer c;
 	
-	public MoneyEvolution(Player p, Ordi o) {
+	public MoneyEvolution(Player p, Computer c) {
 		this.p=p;
-		this.o = o;
+		this.c = c;
 	}
 	public void run() {
-		synchronized(key) {                               
-		while(o.isAtPosition(p.getFrontX(), p.getFrontY())) {
-			((Ordi)o).makeMoney(p);			
+		//synchronized(key) {                               
+		while(c.isAtPosition(p.getFrontX(), p.getFrontY()) && p instanceof Worker) {
+			((Computer)c).makeMoney(p);			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			//}
 				
 		
 	

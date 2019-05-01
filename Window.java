@@ -40,11 +40,9 @@ public class Window extends JFrame {
     public void makeActive() {
     	this.setVisible(true);
     	active_window = this;
-    	update();
     }
     public void makeUnactive() {
     	this.setVisible(false);
-    	update();
     }
 
     public void update() {
@@ -64,9 +62,6 @@ public class Window extends JFrame {
 		return map.MAP_SIZE;
 	}
 	
-	public void setPlayer(Player p) {
-		status.setPlayer(p);
-	}
 	public void setPlayers(ArrayList<Player> players) {
 		status.setPlayers(players);
 	}
@@ -79,5 +74,8 @@ public class Window extends JFrame {
 	}
 	public void setInventory(ArrayList<GameObject> inventory) {
 		this.status.setInventory(inventory);
+	}
+	public void setObjects() {
+		this.status.setObjects(objects);
 	}
 }

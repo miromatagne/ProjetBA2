@@ -24,7 +24,6 @@ public class BlockBreakable extends Block implements Deletable, Activable {
 
 
     public void crush(){
-    	System.out.println("C");
         notifyDeletableObserver(); //On appelle la méthode qui va détruire le bloc
     }
     // //////////////////////////////////////////////////////////////////////////////////////
@@ -38,10 +37,7 @@ public class BlockBreakable extends Block implements Deletable, Activable {
     @Override
     public void notifyDeletableObserver() {
     	//Supprime les blocs qui sont supprimables.
-        int i = 0;
-        System.out.println(observers.size());
         for (DeletableObserver o : observers) {
-            i++;
             o.delete(this, null);
         }
     }
@@ -59,7 +55,8 @@ public class BlockBreakable extends Block implements Deletable, Activable {
 
 	@Override
 	public void updateActivePlayer(Player active_player) {
-		this.active_player = active_player;	
+		this.active_player = active_player;
 	}
+
 
 }

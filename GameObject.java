@@ -26,6 +26,11 @@ public abstract class GameObject {
     public boolean isAtPosition(int x, int y) {
         return this.posX == x && this.posY == y;
     }
+    
+    public void setPosition(int x, int y) {
+    	this.posX = x;
+    	this.posY = y;
+    }
 
     public abstract boolean isObstacle();
 

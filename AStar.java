@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class AStar {
-	private static int mapSize = 25;
+	private static int mapSize = 40;
 	private boolean closed[][];
 	private int startI, startJ;
 	private int endI, endJ;
@@ -27,10 +27,10 @@ public class AStar {
 		//Cette ArrayList correspond à une liste d'obstacles 
 		startI = xi;
 		startJ = yi;
-		System.out.println(xi);
-		System.out.println(yi);
-		System.out.println(xf);
-		System.out.println(yi);
+		//System.out.println(xi);
+		//System.out.println(yi);
+		//System.out.println(xf);
+		//System.out.println(yi);
 		endI = xf;
 		endJ = yf;
 		grid = new Cell[mapSize][mapSize];

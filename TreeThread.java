@@ -1,9 +1,9 @@
 package Model;
 
-public class TreeThread extends Thread {
-	Three tree;
+public class TreeThread implements Runnable {
+	Tree tree;
 	Player active_player;
-	public TreeThread(Three tree, Player active_player) {
+	public TreeThread(Tree tree, Player active_player) {
 		this.tree = tree;
 		this.active_player = active_player;
 	}

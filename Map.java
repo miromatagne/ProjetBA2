@@ -1,13 +1,19 @@
 package View;
 
+import Model.Apple;
 import Model.Directable;
 import Model.GameObject;
+import Model.Toilet;
+import Model.Vodka;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -30,8 +36,6 @@ public class Map extends JPanel {
 				int y = e.getY()/BLOC_SIZE;           // on prend ensuite l'entier le plus proche ce qui renvoie enft le numéro de notre block 
 				                                      // sur la map
 				mouseController.mapEvent(x, y);       // on attribue a x et y l'endroit de la position de la souris
-				System.out.println(x);
-				System.out.println(y);
 			}
 			public void mouseClicked(MouseEvent arg0) {}
 			public void mouseEntered(MouseEvent arg0) {}
@@ -82,7 +86,6 @@ public class Map extends JPanel {
         	int x = object.getPosX();
             int y = object.getPosY();
             int color = object.getColor();
-
             if (color == 0) {
                 g.setColor(Color.DARK_GRAY); 
             } else if (color == 1) {
@@ -95,13 +98,32 @@ public class Map extends JPanel {
                 g.setColor(Color.RED);
             } else if (color == 5) {
                 g.setColor(Color.ORANGE);
+            } else if (color == 9 ) {
+            	g.setColor(Color.BLACK);
             }
+            
+            Image apple = getImage("Apple.PNG");
+            Image vodka = getImage("Vodka.PNG");
+            Image toilet = getImage("toilet.PNG");
+            if(object instanceof Apple) {
+            	g.drawImage(apple, x*BLOC_SIZE ,y*BLOC_SIZE,BLOC_SIZE-2,BLOC_SIZE-2, null);
+                this.repaint();
+            }
+            else if(object instanceof Vodka) {
+            	g.drawImage(vodka, x*BLOC_SIZE ,y*BLOC_SIZE,BLOC_SIZE-2,BLOC_SIZE-2, null);
+                this.repaint();
+            }
+            else if(object instanceof Toilet) {
+            	g.drawImage(toilet, x*BLOC_SIZE ,y*BLOC_SIZE,BLOC_SIZE-2,BLOC_SIZE-2, null);
+                this.repaint();
+            }
+            else {
             // selon les différents cas on change le set color
             // les rectangles dessinés ci-dessous auront différentes couleurs
-            g.fillRect(x * BLOC_SIZE, y * BLOC_SIZE, BLOC_SIZE - 2, BLOC_SIZE - 2);
-            g.setColor(Color.BLACK);
-            g.drawRect(x * BLOC_SIZE, y * BLOC_SIZE, BLOC_SIZE - 2, BLOC_SIZE - 2);
-            
+            	g.fillRect(x * BLOC_SIZE, y * BLOC_SIZE, BLOC_SIZE - 2, BLOC_SIZE - 2);
+            	g.setColor(Color.BLACK);
+            	g.drawRect(x * BLOC_SIZE, y * BLOC_SIZE, BLOC_SIZE - 2, BLOC_SIZE - 2);
+            }
             // Decouper en fontions
             if(object instanceof Directable) {
                 int direction = ((Directable) object).getDirection();
@@ -142,5 +164,18 @@ public class Map extends JPanel {
 
 	public void addMouse(Mouse m) {
 		this.mouseController = m;
+	}
+	
+	public Image getImage(String path) {
+		Image tempImage = null; 
+		try {
+			URL imageurl = Map.class.getResource(path); 
+    	tempImage = Toolkit.getDefaultToolkit().getImage(imageurl); 
+    	}
+    	catch(Exception e){
+    		System.out.println(""+e.getMessage()); 
+    		
+    	}
+		return tempImage;
 	}
 }
