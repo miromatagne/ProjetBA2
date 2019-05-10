@@ -14,7 +14,7 @@ public class Refresh implements Runnable {
 			game.notifyView();
 			
 			try {
-				Thread.sleep(50);
+				Thread.sleep(400);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

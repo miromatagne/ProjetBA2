@@ -1,13 +1,16 @@
 package Model;
 
+import java.awt.Image;
+
 public class Tree extends BlockBreakable implements Gain {
 
     private int lifepoints = 100;
     public static int gain = 50;
     Player active_player;
+    static Image image = getImage("Tree.PNG");
     
     public Tree(int X, int Y) {
-        super(X, Y, 3, 1);
+        super(X, Y,2,2, 3, image);
     }
        
     public void cut (Player p){

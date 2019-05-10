@@ -1,9 +1,12 @@
 package Model;
 
+import java.awt.Image;
+
 public class Boisson extends BlockBreakable {
 	public double alcool ; 
+	static Image image = getImage("Bed.PNG");
 	public Boisson(int X, int Y, int couleur, double alcool) {
-		super(X, Y, couleur, 1);
+		super(X, Y, 1, 1, 1, image);
 		this.alcool = alcool;
 	}
 	
@@ -18,6 +21,8 @@ public class Boisson extends BlockBreakable {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	
 }
 
 

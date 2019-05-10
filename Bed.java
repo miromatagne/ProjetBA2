@@ -1,10 +1,13 @@
 package Model;
 
-public class Bed extends BlockUnbreakable implements Activable {
+import java.awt.Image;
+
+public class Bed extends Furniture implements Activable, SBableObject {
 	Player active_player = null;
+	static Image image = getImage("Bed.JPG");
 	
 	public Bed (int x, int y){
-		super(x,y,3);
+		super(x,y,2,2,image,"Bed",200);
 		
 		
 	}
@@ -19,11 +22,6 @@ public class Bed extends BlockUnbreakable implements Activable {
 		return true;
 	}
 
-	@Override
-	public boolean isAddable() {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
 	@Override
 	public void updateActivePlayer(Player active_player) {

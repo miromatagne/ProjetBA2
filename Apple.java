@@ -1,26 +1,14 @@
 package Model;
 
-public class Apple extends BlockBreakable {
-    int hunger = 15;
-    int life = 10;
-	
+import java.awt.Image;
+
+public class Apple extends Food {
+    private static int hunger = 15;
+    private static int life = 10;
+    static Image image = getImage("Apple.PNG");
 	
 	public Apple(int X, int Y) {
-		super(X, Y, 1, 1);
+		super(X,Y,hunger,life,image, "Apple",5);
 		// TODO Auto-generated constructor stub
-	}
-	
-	public void activate() {
-		this.crush();
-		active_player.regain(hunger,life);		
-	}
-
-	@Override
-	public boolean isAddable() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	public void updateActivePlayer(Player active_player) {
-		this.active_player = active_player;	
 	}
 }

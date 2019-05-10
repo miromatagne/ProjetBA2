@@ -1,9 +1,12 @@
 package Model;
 
+import java.awt.Image;
+
 public class Shower extends BlockUnbreakable implements Activable {
 	Player active_player;
+	static Image image = getImage("Shower2.PNG");
 	public Shower(int x, int y) {
-		super(x,y,4);
+		super(x,y,1,1,image);
 	}
 
 	@Override

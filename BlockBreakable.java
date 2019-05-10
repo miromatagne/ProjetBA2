@@ -1,5 +1,6 @@
 package Model;
 
+import java.awt.Image;
 import java.util.ArrayList;
 
 public class BlockBreakable extends Block implements Deletable, Activable {
@@ -7,19 +8,21 @@ public class BlockBreakable extends Block implements Deletable, Activable {
     private ArrayList<DeletableObserver> observers = new ArrayList<DeletableObserver>(); //liste de blocs
     protected Player active_player;
     private int lifepoints = 0;
-    public BlockBreakable(int X, int Y, int couleur, int lifepoints) { //X,Y = position du bloc, lifepoints = "vie" du bloc avant qu'il se détruise
-        super(X, Y, couleur);
+    public BlockBreakable(int X, int Y, int length, int width, int lifepoints, Image image) { //X,Y = position du bloc, lifepoints = "vie" du bloc avant qu'il se détruise
+        super(X, Y, length, width, image);
         this.lifepoints = lifepoints; 
     }
     
     public void activate(){ //On "active" le bloc, on interagit avec lui, mais comment on déclenche activate() ?
-        if (lifepoints == 1){
-            crush(); //On détruit le bloc car il n'a plus assez de vie
-        }
-        else {
-            lifepoints--; //On diminue la vie de 1 à chaque fois qu'on active le bloc
-            this.color = lifepoints + 2; // On change la couleur du bloc (on évite de retourner au gris)
-        }
+    	if(!(this instanceof Panade)) {
+    		if (lifepoints == 1){
+    			crush(); //On détruit le bloc car il n'a plus assez de vie
+    		}
+    		else {
+    			lifepoints--; //On diminue la vie de 1 à chaque fois qu'on active le bloc
+    			this.color = lifepoints + 2; // On change la couleur du bloc (on évite de retourner au gris)
+    		}
+    	}
     }
 
 
@@ -50,13 +53,16 @@ public class BlockBreakable extends Block implements Deletable, Activable {
 	@Override
 	public boolean isAddable() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public void updateActivePlayer(Player active_player) {
 		this.active_player = active_player;
 	}
-
+	
+	public int getLifepoints() {
+		return this.lifepoints;
+	}
 
 }

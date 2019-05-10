@@ -17,18 +17,18 @@ public class MovePlayer implements Runnable {
 	
 	public void run() {
 		synchronized(key){
-			try {
+			/*try {
 				//Thread.sleep(active_player.speed);
 				Thread.sleep(0);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			
     int nextX = active_player.getPosX() + posx; //Coordonnées du prochain déplacement (1 case)
     int nextY = active_player.getPosY() + posy;
     boolean obstacle = false;
-    for (GameObject object : game.getActiveWindow(game.getWindows()).objects) {
+    for (GameObject object : game.getActiveWindow().objects) {
         if (object.isAtPosition(nextX, nextY)) { //Check si il y a un objet là où il veut se déplacer
             obstacle = object.isObstacle(); //Renvoie true si il y a un objet
         }

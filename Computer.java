@@ -1,6 +1,8 @@
 package Model;
 
-public class Computer extends BlockUnbreakable implements Gain,Activable {
+import java.awt.Image;
+
+public class Computer extends BlockUnbreakable implements Gain,Activable,SBableObject {
 
 
 	protected int posX;
@@ -8,11 +10,11 @@ public class Computer extends BlockUnbreakable implements Gain,Activable {
 	protected int color;
 	Player active_player;
 	protected static int rapporte = 10;
-	
+	static Image image = getImage("Computer.PNG");
+	static String name = "Computer";
 
-	public Computer(int X, int Y, int color) {
-			super(X, Y, color);
-			
+	public Computer(int X, int Y) {
+			super(X,Y,1,1,image);
 		}
 	
 	public void makeMoney(Player p) {
@@ -37,6 +39,16 @@ public class Computer extends BlockUnbreakable implements Gain,Activable {
 	@Override
 	public void updateActivePlayer(Player active_player) {
 		this.active_player = active_player;
+	}
+
+	@Override
+	public String getName() {
+		return "Computer";
+	}
+
+	@Override
+	public int getPrice() {
+		return 100;
 	}
 
 

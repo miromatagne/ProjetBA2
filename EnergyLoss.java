@@ -15,8 +15,11 @@ package Model;
 				if(p.isInShower()==false) {
 					p.lowerHygiene();
 				}
-				if(p.isInBed()==false) {
-					p.tire();
+				if(p.getHygiene() < 20 && !(p.isInBed())) {
+					p.tire(3);
+				}
+				else if(p.isInBed()==false) {
+					p.tire(1);
 				}
 				try {
 					Thread.sleep(2000);

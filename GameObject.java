@@ -1,15 +1,28 @@
 package Model;
 
-public abstract class GameObject {
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.Serializable;
+import java.net.URL;
+
+import View.Map;
+
+public abstract class GameObject implements Serializable{
     protected int posX; //seule cette classe et les classes fille ont accès à ces objets
     protected int posY;
     protected int color;
+    protected int length;
+    protected int width;
+    protected Image image;
 
-    public GameObject(int X, int Y, int color) {
+    public GameObject(int X, int Y, int length, int width, Image image){
         this.posX = X;
         this.posY = Y;
-        this.color = color;
+        this.length = length;
+        this.width = width;
+        this.image = image;
     }
+    
 
     public int getPosX() {
         return this.posX;
@@ -24,15 +37,47 @@ public abstract class GameObject {
     }
 
     public boolean isAtPosition(int x, int y) {
-        return this.posX == x && this.posY == y;
+    	boolean isAtPos = false;
+    	for(int px = posX; px < posX + width; px++) {
+    		for(int py = posY; py < posY + length; py++) {
+    			if(px == x && py == y) {
+    				isAtPos = true;
+    			}
+    		}
+    	}
+    	return isAtPos;
     }
     
     public void setPosition(int x, int y) {
     	this.posX = x;
     	this.posY = y;
     }
+    
+    public int getWidth() {
+    	return this.width;
+    }
+    
+    public int getLength() {
+    	return this.length;
+    }
 
     public abstract boolean isObstacle();
 
 	public abstract boolean isAddable();
+	
+	public static Image getImage(String path) {
+		Image tempImage = null; 
+		try {
+			URL imageurl = GameObject.class.getResource(path); 
+    	tempImage = Toolkit.getDefaultToolkit().getImage(imageurl); 
+    	}
+    	catch(Exception e){
+    	}
+		return tempImage;
+	}
+	
+	public Image getIm() {
+		return this.image;
+	}
+	
 }

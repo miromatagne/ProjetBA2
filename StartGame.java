@@ -3,6 +3,7 @@ package View;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.Serializable;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,13 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class StartGame extends JFrame{
-	JButton buttonStart;
-	JTextField textnbBebe;
-	JTextField textnbAdulte;
-	JTextField textnbVieux;
-	JTextField textnbEtages;
-
+public class StartGame extends JFrame implements Serializable{
 	
 	public StartGame() {
 		JFrame frame = new JFrame("StartGame");
@@ -25,11 +20,11 @@ public class StartGame extends JFrame{
 		JPanel choixPerso = new JPanel(new GridLayout(13,1));
 		JPanel choixEtage = new JPanel(new GridLayout(13,1));
 		JPanel jouer = new JPanel(new BorderLayout());
-		buttonStart = new JButton("Jouer");
-		textnbBebe = new JTextField();
-		textnbAdulte = new JTextField();
-		textnbVieux = new JTextField();
-		JLabel nbBebes = new JLabel("Nombre de bebes");
+		JButton buttonStart = new JButton("Jouer");
+		JTextField textnbBebe = new JTextField();
+		JTextField textnbAdulte = new JTextField();
+		JTextField textnbVieux = new JTextField();
+		JLabel nbBebes = new JLabel("Nombre de bébés");
 		JLabel espace = new JLabel("");
 		JLabel espace2 = new JLabel("");
 		JLabel espace3 = new JLabel("");
@@ -37,7 +32,7 @@ public class StartGame extends JFrame{
 		JLabel nbAdultes = new JLabel("Nombre d'adultes");
 		JLabel nbVieux = new JLabel("Nombre de vieux");
 		JLabel nbEtages = new JLabel("Nombre d'étages");
-		textnbEtages = new JTextField();
+		JTextField textnbEtages = new JTextField();
 		frame.setBounds(700, 500, 800, 400);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

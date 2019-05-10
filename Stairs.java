@@ -1,5 +1,6 @@
 package Model;
 
+import java.awt.Image;
 import java.util.ArrayList;
 
 import View.Window;
@@ -12,8 +13,10 @@ public class Stairs extends BlockUnbreakable implements Activable {
 	private Player active_player;
 	private Game g;
 	private ArrayList<Window> windows;
+	static Image image1 = getImage("stairs1.PNG");
+	static Image image2 = getImage("stairs2.PNG");
 	public Stairs(int x, int y, ArrayList<Window> windows, int etageB, int etageH, Game g) {
-		super(x,y,9);
+		super(x,y,1,1,image1);
 		this.x = x;
 		this.y = y;
 		this.windows = windows;
@@ -33,11 +36,11 @@ public class Stairs extends BlockUnbreakable implements Activable {
 		windowB.objects.remove(active_player);
 		windowH.objects.add(active_player);
 		windowH.setPlayers(windowH.players);
-		g.notifyObservers();
-		windowH.setInventory(active_player.inventory);
 		windowH.makeActive();
 		windowB.makeUnactive();
+		g.notifyObservers();
 	}
+	
 
 	@Override
 	public boolean isObstacle() {
@@ -54,5 +57,13 @@ public class Stairs extends BlockUnbreakable implements Activable {
 	@Override
 	public void updateActivePlayer(Player active_player) {
 		this.active_player = active_player;
+	}
+	
+	public int getEtageB() {
+		return etageB;
+	}
+	
+	public int getEtageH() {
+		return etageH;
 	}
 }

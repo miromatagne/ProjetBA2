@@ -7,63 +7,52 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import Controller.Mouse;
+import Controller.MouseForStatus;
 import Model.Activable;
 import Model.Apple;
+import Model.Bed;
+import Model.Computer;
 import Model.Eldery;
 import Model.GameObject;
+import Model.Pill;
 import Model.Player;
+import Model.Stairs;
 import Model.Toilet;
 import Model.Vodka;
 
-public class Status extends JPanel {
+public class Status extends JPanel implements Serializable{
 	private ArrayList<Player> players = null;
 	private int BAR_LENGTH = 60; //Longueur de la barre d'Ènergie
 	private int BAR_WIDTH = 20; //Largeur de la barre d'Ènergie (hauteur)
 	private int AVATAR_SIZE = 30; //taille du carrÈ bleu en haut ‡ droite de l'interface graphique
 	private int BLOCK_SIZE = 25;
 	private int PREVIEW_SIZE = 80;
-	private ArrayList<GameObject> inventory = null;
+	private int a = 0;
+	private int b = 25;
 	private Mouse mouseController = new Mouse();
 	private ArrayList<GameObject> objects;
+	private GameObject active_object;
 	private Player active_player;
+	private MouseForStatus mouse = new MouseForStatus(this);
 
     public Status() {
         this.setPreferredSize(new Dimension(450, 600)); //Taille de la zone avec l'Ènergie etc... a droite de la Map ?
         this.setBackground(Color.LIGHT_GRAY); //Couleur du background de la zone avec l'Ènergie etc
         this.setOpaque(true); //Pas de changement quand je met en commentaire
-        addMouseListener(new MouseListener() {
- 	       
-			public void mousePressed(MouseEvent e) {
-				int x = e.getX()/BLOCK_SIZE;           // on divise la position x et y par la taille du bloc ce qui renvoie un double
-				int y = e.getY()/BLOCK_SIZE;           // on prend ensuite l'entier le plus proche ce qui renvoie enft le num√©ro de notre block 
-				                                      // sur la map
-			                                          // on attribue a x et y l'endroit de la position de la souris
-				
-				mouseController.statusEvent(x,y);
-				
-			}
-			
-		
-			public void mouseClicked(MouseEvent arg0) {}
-			public void mouseEntered(MouseEvent arg0) {}
-			public void mouseExited(MouseEvent arg0) {}
-			public void mouseReleased(MouseEvent arg0) {}
-        });
+        addMouseListener(mouse);
     }
     
 	public void paint(Graphics g) {
 		super.paintComponent(g);
 		int i = 0;
 		int totalMoney = 0;
-		Image apple = getImage("Apple.PNG");
-        Image vodka = getImage("Vodka.PNG");
-        Image toilet = getImage("toilet.PNG");
 		for(Player p : players) {
 			if(p.isActivePlayer()) {
 				active_player = p;
@@ -71,45 +60,12 @@ public class Status extends JPanel {
 		}
 		for(GameObject o : objects) {
 			if(o.getPosX()== active_player.getFrontX() && o.getPosY() == active_player.getFrontY() && o instanceof Activable) {
-				if(o instanceof Apple) {
-	            	g.drawImage(apple, 150, 25, PREVIEW_SIZE, PREVIEW_SIZE, null);
-	                this.repaint();
+	            g.drawImage(o.getIm(), 150, 25, PREVIEW_SIZE, PREVIEW_SIZE, null);
+	            this.repaint();
 	            }
-	            else if(o instanceof Vodka) {
-	            	g.drawImage(vodka, 150, 25, PREVIEW_SIZE + 30, PREVIEW_SIZE + 30, null);
-	                this.repaint();
-	            }
-	            else if(o instanceof Toilet) {
-	            	g.drawImage(toilet, 150, 25, PREVIEW_SIZE, PREVIEW_SIZE, null);
-	                this.repaint();
-	            }
-	            else {
-	            // selon les diff√©rents cas on change le set color
-	            // les rectangles dessin√©s ci-dessous auront diff√©rentes couleurs
-	            	g.setColor(Color.RED);
-	            	g.fillRect(150, 25, PREVIEW_SIZE, PREVIEW_SIZE);
-	            	g.setColor(Color.BLACK);
-	            	g.drawRect(150, 25, PREVIEW_SIZE, PREVIEW_SIZE);
-	            }
-			}
 		}
-		int color = active_player.getColor();
-		if (color == 0) {
-            g.setColor(Color.DARK_GRAY);
-        } else if (color == 1) {
-            g.setColor(Color.GRAY);
-        } else if (color == 2) {
-            g.setColor(Color.BLUE);
-        } else if (color == 3) {
-            g.setColor(Color.GREEN);
-        } else if (color == 4) {
-            g.setColor(Color.RED);
-        } else if (color == 5) {
-            g.setColor(Color.ORANGE);
-        } else if (color == 6) {
-            g.setColor(Color.BLACK);
-        }
-		g.fillRect(0, 195+100*i, AVATAR_SIZE, AVATAR_SIZE); //(pos horizontale, pos verticale, longueur du cote, longueur du cote) 
+		Image player = active_player.getIm();
+		g.drawImage(player, 0, 195+100*i, AVATAR_SIZE, AVATAR_SIZE,null); //(pos horizontale, pos verticale, longueur du cote, longueur du cote) 
 		g.setColor(Color.BLACK);
 		g.drawString("Money:"+active_player.getMoney(), 80, 200);
 		g.drawString("Energie:", 80, 270); //Ecrit le mot "Energy", avec sa position
@@ -164,47 +120,27 @@ public class Status extends JPanel {
 	    	}
 	    
 	    }
+	    g.setColor(Color.RED);
+	    g.drawRect(a*BLOCK_SIZE, b*BLOCK_SIZE , BLOCK_SIZE, BLOCK_SIZE);
 	    
 	    int v = -1;
 		int w = 0;
 		
-		for(GameObject obj:inventory) {	
-			color=obj.getColor();
-	            if (color == 0) {
-	                g.setColor(Color.DARK_GRAY); 
-	            } else if (color == 1) {
-	                g.setColor(Color.RED);
-	            } else if (color == 2) {
-	                g.setColor(Color.BLUE);
-	            } else if (color == 3) {
-	                g.setColor(Color.GREEN);
-	            } else if (color == 4) {
-	                g.setColor(Color.RED);
-	            } else if (color == 5) {
-	                g.setColor(Color.ORANGE);
-	            }
-	            
+		for(GameObject obj:active_player.getInventory()) {	            
 	            v+=1;
-	            if(v<5) {
-	            	if(obj instanceof Apple) {
-	            		g.drawImage(apple, v*BLOCK_SIZE + 2 ,w*BLOCK_SIZE+627,BLOCK_SIZE-5,BLOCK_SIZE-5, null);
-	                    this.repaint();
-	            	}
-	            	else if(obj instanceof Vodka) {
-	            		g.drawImage(vodka, v*BLOCK_SIZE + 2 ,w*BLOCK_SIZE+627,BLOCK_SIZE-5,BLOCK_SIZE-5, null);
-	                    this.repaint();
-	            	}
-	            	else {
-	            	g.fillRect(v*BLOCK_SIZE+2, 627+w*BLOCK_SIZE, BLOCK_SIZE-5, BLOCK_SIZE-5);
-	            	}
-	            }
-	            else if (v==5 && w<5) {
+	            if (v==5 && w<5) {
 	            	v=0;
 	            	w+=1;
-	            	g.fillRect(v*BLOCK_SIZE+2,627+w*BLOCK_SIZE, BLOCK_SIZE-5, BLOCK_SIZE-5);
-	            }          
-	}
-}
+	            }
+	            g.drawImage(obj.getIm(), v*BLOCK_SIZE + 2 ,w*BLOCK_SIZE+627,BLOCK_SIZE-5,BLOCK_SIZE-5, null);
+	            this.repaint();
+	        } 
+				
+			if(active_player.getInventory().size() != 0) {
+				active_object = active_player.getInventory().get(a+5*(b-25));   // on d√©fini l'active_object de notre inventaire apd du clic de la souris
+			
+			}
+		}
 
     public void redraw() {
         this.repaint();
@@ -218,9 +154,6 @@ public class Status extends JPanel {
 		this.players = players;
 	}
 	
-	public void setInventory(ArrayList<GameObject> inventory) {
-		this.inventory=inventory;
-	}
 	public Image getImage(String path) {
 		Image tempImage = null; 
 		try {
@@ -228,9 +161,29 @@ public class Status extends JPanel {
     	tempImage = Toolkit.getDefaultToolkit().getImage(imageurl); 
     	}
     	catch(Exception e){
-    		System.out.println(""+e.getMessage()); 
-    		
     	}
 		return tempImage;
+	}
+	
+	public GameObject getActiveObject() {
+		return this.active_object;
+	}
+	public void setActiveObject() {
+		a = 0 ;
+		b = 25;
+	}
+	
+	public Mouse getMouseController() {
+		return this.mouseController;
+	}
+	
+	public Player getActivePlayer() {
+		return active_player;
+	}
+	public void setA(int a) {
+		this.a = a;
+	}
+	public void setB(int b) {
+		this.b = b;
 	}
 }

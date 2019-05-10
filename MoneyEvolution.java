@@ -3,7 +3,7 @@ package Model;
 public class MoneyEvolution implements Runnable{
 	
     private Player p;
-	private String key = "cle";
+	private String key = "clef";
 	private Computer c;
 	
 	public MoneyEvolution(Player p, Computer c) {
@@ -11,7 +11,7 @@ public class MoneyEvolution implements Runnable{
 		this.c = c;
 	}
 	public void run() {
-		//synchronized(key) {                               
+		synchronized(key) {                               
 		while(c.isAtPosition(p.getFrontX(), p.getFrontY()) && p instanceof Worker) {
 			((Computer)c).makeMoney(p);			
 			try {
@@ -19,7 +19,7 @@ public class MoneyEvolution implements Runnable{
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			//}
+			}
 				
 		
 	

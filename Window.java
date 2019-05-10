@@ -6,6 +6,7 @@ import Model.Player;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.KeyListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
 
 import Controller.Mouse;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements Serializable{
 	private JPanel groupPanel = new JPanel(new BorderLayout());
     private Map map = new Map();
     private Status status = new Status();
@@ -39,10 +40,15 @@ public class Window extends JFrame {
     }
     public void makeActive() {
     	this.setVisible(true);
+    	this.setObjects();
     	active_window = this;
     }
     public void makeUnactive() {
     	this.setVisible(false);
+    }
+    
+    public int getMapSize() {
+    	return this.map.MAP_SIZE;
     }
 
     public void update() {
@@ -57,10 +63,6 @@ public class Window extends JFrame {
     public void setMouseListener(Mouse m) {
         this.map.addMouse(m);
     }
-
-	public int getMapSize() {
-		return map.MAP_SIZE;
-	}
 	
 	public void setPlayers(ArrayList<Player> players) {
 		status.setPlayers(players);
@@ -72,10 +74,10 @@ public class Window extends JFrame {
 	public boolean isActiveWindow() {
 		return this == active_window;
 	}
-	public void setInventory(ArrayList<GameObject> inventory) {
-		this.status.setInventory(inventory);
-	}
 	public void setObjects() {
 		this.status.setObjects(objects);
+	}
+	public Status getStatus() {
+		return this.status;
 	}
 }

@@ -1,6 +1,9 @@
 package Model;
 	
-	import java.util.ArrayList;
+	import java.awt.Image;
+import java.util.ArrayList;
+
+import View.Window;
 	
 	public class Player extends GameObject implements Directable {
 	
@@ -17,11 +20,12 @@ package Model;
 	    boolean inBed = false;
 	    boolean inShower = false;
 	    public int speed = 0;
+	    Window w;
 	    
 	   
 	
-	    public Player(int x, int y, int color) {
-	        super(x, y, color); //Le 2 est la couleur
+	    public Player(int x, int y, Image image) {
+	        super(x, y, 1, 1, image); //Le 2 est la couleur
 	    }
 	
 	    public void move(int X, int Y) {
@@ -88,9 +92,14 @@ package Model;
 	    	
 	    }
 	
-		public void tire() {
-			if (energy > 1)
-				energy -= 1;
+		public void tire(int i) {
+			if (energy > i) {
+				energy -= i;
+			}
+			else {
+				energy = 0;
+				this.kill();
+			}
 		}
 		public void starve() {
 			if (faim > 1)
@@ -131,8 +140,11 @@ package Model;
 		public boolean isAddable() {
 			return false;
 		}
+		public void addtoinventory(GameObject obj) {                                                       
+	    	this.inventory.add(obj);                                                  
+	    }
 		public void addtoinventory(GameObject obj, ArrayList<GameObject> objects) {   
-	    	objects.remove(obj);                                                      
+	    	objects.add(obj);                                                      
 	    	this.inventory.add(obj);                                                  
 	    }
 		
@@ -255,13 +267,27 @@ package Model;
 	    	}
 	    }
 	    
+	    public void getShot() {
+	    	if(this.energy > 50) {
+	    		this.energy -= 50;
+	    	}
+	    	else {
+	    		this.kill();
+	    	}
+	    }
+	    
 	    public void Debourre() {
 	    	if(alcoolemie>0) {
 	    	alcoolemie-=5;
+	    	}	
+	    }
 	    
-	    	}
-	    	
-	    	
+	    public void updateActiveWindow(Window w) {
+	    	this.w = w;
+	    }
+	    
+	    public void kill() {
+	    	w.objects.remove(this);
 	    }
 	    
 	}

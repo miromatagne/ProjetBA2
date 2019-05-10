@@ -1,8 +1,9 @@
 package Controller;
+	import java.io.Serializable;
+
+import Model.Game;
 	
-	import Model.Game;
-	
-	public class Mouse {
+	public class Mouse implements Serializable {
 	    private static Game game;  // on range game dans une variable static qu'on défini dans main
 	
 	    public Mouse() {
@@ -18,13 +19,10 @@ package Controller;
 		
 		public void statusEvent(int x, int y) {
 				game.removeFromInventory(x,y);
-				System.out.println("je retire");
-				System.out.println(x);
-				System.out.println(y);
 			}
 		
-		public void setGame(Game game) {
-			this.game=game;
+		public static void setGame(Game game) {
+			Mouse.game=game;
 		}
 
 		

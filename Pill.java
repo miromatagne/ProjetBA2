@@ -1,9 +1,12 @@
 package Model;
 
+import java.awt.Image;
+
 public class Pill extends BlockBreakable {
 	int health = 20;
+	static Image image = getImage("Pill.PNG");
 	public Pill(int X, int Y) {
-		super(X, Y, 4, 1);
+		super(X, Y, 1, 1, 4, image);
 		}
 
 	Player active_player = null;

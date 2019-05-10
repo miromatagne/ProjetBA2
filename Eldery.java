@@ -1,8 +1,11 @@
 package Model;
 
+import java.awt.Image;
+
 public class Eldery extends Player implements Worker{
+	static Image image = getImage("Eldery1.PNG");
 	public Eldery(int x, int y) {
-		super(x,y,4);
+		super(x,y,image);
 		Thread t1 = new Thread(new HealthChrono(this));
 		t1.start();
 	}
