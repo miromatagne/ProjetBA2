@@ -22,21 +22,10 @@ public class TestAddInventory {
 		windows.add(w);
 		int x = 3;
 		int y = 4;
-		Image image = getImage("Bed.PNG");
-		Player p = new Player(x,y,image);
+		Player p = new Player(x,y);
 		Apple a = new Apple(1,2);
 		p.addtoinventory(a);
 		assertEquals(p.getInventory().get(0),a);
 	}
 	
-	public Image getImage(String path) {
-		Image tempImage = null; 
-		try {
-			URL imageurl = Map.class.getResource(path); 
-    	tempImage = Toolkit.getDefaultToolkit().getImage(imageurl); 
-    	}
-    	catch(Exception e){
-    	}
-		return tempImage;
-	}
 }

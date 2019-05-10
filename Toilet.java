@@ -4,10 +4,9 @@ import java.awt.Image;
 
 public class Toilet extends BlockUnbreakable implements Activable {
 	Player active_player;
-	static Image image = getImage("Toilet.PNG");
 	
 	public Toilet(int x, int y) {
-		super(x,y,1,1,image);
+		super(x,y,1,1);
 	}
 	
 	public void activate() {

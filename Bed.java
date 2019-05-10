@@ -4,10 +4,9 @@ import java.awt.Image;
 
 public class Bed extends Furniture implements Activable, SBableObject {
 	Player active_player = null;
-	static Image image = getImage("Bed.JPG");
 	
 	public Bed (int x, int y){
-		super(x,y,2,2,image,"Bed",200);
+		super(x,y,2,2,"Bed",200);
 		
 		
 	}

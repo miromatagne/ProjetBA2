@@ -13,8 +13,9 @@ import javax.swing.JTextField;
 import Controller.Keyboard;
 import Controller.Mouse;
 import Model.Game;
+import Model.ModelWindow;
 
-public class StartListener implements ActionListener,Serializable {
+public class StartListener implements ActionListener{
 	JTextField textnbBebe;
 	JTextField textnbAdulte;
 	JTextField textnbVieux;
@@ -48,18 +49,18 @@ public class StartListener implements ActionListener,Serializable {
 			new StartGame();
 		}
 		if(play) {
-			ArrayList<Window> windows = new ArrayList<Window>();
+			ArrayList<ModelWindow> windows = new ArrayList<ModelWindow>();
 			frame.setVisible(false);
 			frame.dispose();
 	        for (int i = 0; i < nbEtages; i++) {
-	        	Window w = new Window("Etage " + i);
+	        	ModelWindow w = new ModelWindow();
 	        	windows.add(w);
 	        }
 	        Game game = new Game(windows,nbBebe,nbAdulte,nbVieux);
 	        Keyboard keyboard = new Keyboard(game);
 	        Mouse mouse = new Mouse();
 	        mouse.setGame(game);
-	        for (Window window : windows) {
+	        for (ModelWindow window : windows) {
 	        	 window.setKeyListener(keyboard);
 	             window.setMouseListener(mouse);
 	        }

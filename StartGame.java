@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class StartGame extends JFrame implements Serializable{
+public class StartGame extends JFrame {
 	
 	public StartGame() {
 		JFrame frame = new JFrame("StartGame");

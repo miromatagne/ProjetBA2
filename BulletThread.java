@@ -6,9 +6,9 @@ public class BulletThread implements Runnable {
 	int x;
 	int y;
 	Bullet b;
-	Window w;
+	ModelWindow w;
 	Player active_player;
-	public BulletThread(Bullet b, Window w, Player active_player) {
+	public BulletThread(Bullet b, ModelWindow w, Player active_player) {
 		this.b = b;
 		this.w = w;
 		this.active_player = active_player;
@@ -39,7 +39,7 @@ public class BulletThread implements Runnable {
 			e1.printStackTrace();
 		}
 		while(obstacle == false) {
-			for (GameObject o : w.objects) {
+			for (GameObject o : w.getObjects()) {
 				if (o.isAtPosition(b.getPosX() + x, b.getPosY() + y)) { //Check si il y a un objet là où il veut se déplacer
 		            obstacle = o.isObstacle(); //Renvoie true si il y a un objet
 		            obj = o;
@@ -60,7 +60,7 @@ public class BulletThread implements Runnable {
 					active_player.setMoney(dist*100);
 				}
 				b.crush();
-				w.objects.remove(b);
+				w.getObjects().remove(b);
 			}
 			try {
 				Thread.sleep(100);

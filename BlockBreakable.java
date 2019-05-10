@@ -8,8 +8,8 @@ public class BlockBreakable extends Block implements Deletable, Activable {
     private ArrayList<DeletableObserver> observers = new ArrayList<DeletableObserver>(); //liste de blocs
     protected Player active_player;
     private int lifepoints = 0;
-    public BlockBreakable(int X, int Y, int length, int width, int lifepoints, Image image) { //X,Y = position du bloc, lifepoints = "vie" du bloc avant qu'il se détruise
-        super(X, Y, length, width, image);
+    public BlockBreakable(int X, int Y, int length, int width, int lifepoints) { //X,Y = position du bloc, lifepoints = "vie" du bloc avant qu'il se détruise
+        super(X, Y, length, width);
         this.lifepoints = lifepoints; 
     }
     

@@ -8,7 +8,7 @@ import Model.Player;
 import Model.Shop;
 
 
-public class SellListener implements ActionListener,Serializable {
+public class SellListener implements ActionListener {
 	Shop shop;
 	
 	public SellListener(Shop shop) {
@@ -18,7 +18,7 @@ public class SellListener implements ActionListener,Serializable {
 
 
 	public void actionPerformed(ActionEvent e) {
-		shop.mag.Sell();
+		shop.Sell();
 		
 		
 		

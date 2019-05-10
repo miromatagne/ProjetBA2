@@ -1,6 +1,8 @@
 package Model;
 
-public class ObjectFactory {
+import java.io.Serializable;
+
+public class ObjectFactory implements Serializable {
 	GameObject object = null;
 	public GameObject createObject(String o, int x, int y)  { //ajouter throw Exception
 		

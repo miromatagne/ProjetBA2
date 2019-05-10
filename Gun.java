@@ -6,18 +6,17 @@ import View.Window;
 
 public class Gun extends BlockUnbreakable implements Activable{
 	int bullets = 10;
-	Window window;
+	ModelWindow window;
 	Player active_player;
-	static Image image = getImage("Gun.PNG");
 	public Gun(int X, int Y) {
-		super(X, Y, 1, 1, image);
+		super(X, Y, 1, 1);
 		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public void activate() {
 		// TODO Auto-generated method stub
 		boolean obstacle = false;
-		for (GameObject o : window.objects) {
+		for (GameObject o : window.getObjects()) {
 			if (o.isAtPosition(active_player.getFrontX(), active_player.getFrontY())) { //Check si il y a un objet là où il veut se déplacer
 	            obstacle = o.isObstacle(); //Renvoie true si il y a un objet
 	        }
@@ -28,7 +27,7 @@ public class Gun extends BlockUnbreakable implements Activable{
 		if(bullets > 0 && obstacle == false) {
 			bullets -= 1;
 			Bullet b = new Bullet(active_player.getFrontX(), active_player.getFrontY());
-			window.objects.add(b);
+			window.getObjects().add(b);
 			b.setDirection(active_player.getDirection());
 			Thread t1 = new Thread(new BulletThread(b,window,active_player));
 			t1.start();
@@ -48,7 +47,7 @@ public class Gun extends BlockUnbreakable implements Activable{
 		this.bullets += nbBullets;
 	}
 	
-	public void updateActiveWindow(Window window) {
+	public void updateActiveWindow(ModelWindow window) {
 		this.window = window;
 	}
 	

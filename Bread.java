@@ -8,7 +8,7 @@ public class Bread extends Food {
     static Image image = getImage("Bread.PNG");
 	
 	public Bread(int X, int Y) {
-		super(X,Y,hunger,life,image,"Bread",5);
+		super(X,Y,hunger,life,"Bread",5);
 		// TODO Auto-generated constructor stub
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,17 +18,19 @@ import View.Window;
 
 public class Shop extends BlockUnbreakable implements Activable{ 
 	public Player active_player;
-	public Mag mag = new Mag();
+	GameObject active_object;
 	public JFrame j = new JFrame("Shop");
 	public JPanel pan = new JPanel();
 	public JButton sb = new JButton("Sell");
 	public JButton bb = new JButton("Buy");
 	public Game g;
-	public Window w; 
+	public Mag mag;
+	private ArrayList<GameObject> catalogue = new ArrayList<GameObject>();
+	private ArrayList<Integer> stock = new ArrayList<Integer>();
 
-	public Shop(int X, int Y, Image i) {
-		super(X, Y,1,1,i);
-		
+	public Shop(int X, int Y) {
+		super(X, Y,1,1);
+		mag = new Mag(this);
 	}
 	
 	// on crée notre magasin qui est initialement un simple objet, toutefois, dans ses attributs, ils possède une window, celle-ci est rendue visible, lorsque 
@@ -43,7 +46,6 @@ public class Shop extends BlockUnbreakable implements Activable{
 	// mag quant a lui prend connaissance de game en prennant connaissance de shop.
 	
 	public void SetShop() {	
-		mag.assignShop(this);
 		j.getContentPane().setLayout(new BorderLayout());
 		sb.addActionListener(new SellListener(this));
 	    bb.addActionListener(new BuyListener(this)); 
@@ -56,11 +58,11 @@ public class Shop extends BlockUnbreakable implements Activable{
 	
 	public void SetStockandCatalogue(GameObject a, int b) { 
 		
-		if(mag.getCatalogue().size()<10 ) { 
-			mag.getCatalogue().add(a);                           
-		    mag.getStock().add(b);
+		if(catalogue.size()<10 ) { 
+			catalogue.add(a);                           
+		    stock.add(b);
 	      }  
-		else if(mag.getCatalogue().size() == 10) {
+		else if(catalogue.size() == 10) {
 			System.out.println("Le magasin est full");
 		}
 		mag.repaint();
@@ -86,8 +88,69 @@ public class Shop extends BlockUnbreakable implements Activable{
 		
 	}
 	
-	public void updateActiveWindow(Window w) {
-		this.w = w;
+	
+	public ArrayList<GameObject> getCatalogue(){
+		return this.catalogue;
 	}
-
+	
+	public ArrayList<Integer> getStock(){
+		return this.stock;
+	}
+	
+	public void Sell() {
+		GameObject a = active_object;
+		if(a instanceof SBableObject) {
+			active_player.getInventory().remove(a); 
+			active_player.setMoney(((SBableObject)a).getPrice()*80/100);
+			if(active_player.getInventory().size() != 0) {
+				active_object = active_player.getInventory().get(0);
+			}  // car celui-ci rest un active_object sans Ãªtre ds l'invetaire...
+		}
+	}
+	
+	public void Buy() {
+		int PositionSelec = mag.getPositionSelec();
+		if(PositionSelec<= catalogue.size()) {                   
+			if(stock.get(PositionSelec) > 0) {
+				if(active_player.getMoney()>= ((SBableObject)catalogue.get(PositionSelec)).getPrice()) {
+					active_player.setMoney(-(((SBableObject)catalogue.get(PositionSelec)).getPrice()));
+					stock.set(PositionSelec,stock.get(PositionSelec)-1);
+					j.repaint();
+					String ObjType = ((SBableObject)catalogue.get(PositionSelec)).getName();                   
+					GameObject a = null;                                                               
+					switch(ObjType) {                                                            
+					case "Apple" : a = new Apple(1,1);break;
+					case "Avocado" : a = new Avocado(1,1);break;
+					case "Bed" : a = new Bed(1,1);break;
+					case "Bread" : a = new Bread(1,1);break;
+					case "Bullet" : a = new Bullet(1,1);break;
+					case "Cheese" : a = new Cheese(1,1);break;
+					case "Cherry" : a = new Cherry(1,1);break;
+					case "Chair" : a = new Chair(1,1);break;
+					case "Couch" : a = new Couch(1,1);break;
+					case "Chicken" : a = new Chicken(1,1);break;
+					case "Computer" : a = new Computer(1,1);break;
+					case "Cookie" : a = new Cookie(1,1);break;
+					case "Gun" : a = new Gun(1,1);break;
+					case "Panade" : a = new Panade(1,1);break;
+					case "Pill" : a = new Pill(1,1);break;
+					case "Shrimp" : a = new Shrimp(1,1);break;
+					case "Strawberry" : a = new Strawberry(1,1);break;
+					case "Table" : a = new Table(1,1);break;
+					case "Tomato" : a = new Tomato(1,1);break;
+					case "Vodka" : a = new Vodka(1,1,10);break;
+					case "Watermelon" : a = new Watermelon(1,1);break;
+					}  
+					active_player.addtoinventory(a);
+					if(a instanceof Activable) {
+						((Activable) a).updateActivePlayer(active_player);
+		}
+		}
+		}                                                                  
+		}
+		
+}
+	public void setActiveObject(GameObject o) {
+		this.active_object = o;
+	}
 }

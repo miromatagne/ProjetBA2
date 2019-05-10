@@ -4,9 +4,8 @@ import java.awt.Image;
 
 public class Boisson extends BlockBreakable {
 	public double alcool ; 
-	static Image image = getImage("Bed.PNG");
 	public Boisson(int X, int Y, int couleur, double alcool) {
-		super(X, Y, 1, 1, 1, image);
+		super(X, Y, 1, 1, 1);
 		this.alcool = alcool;
 	}
 	

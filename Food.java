@@ -7,8 +7,8 @@ public class Food extends BlockBreakable implements SBableObject {
 	int life;
 	String name;
 	int price;
-	public Food(int x, int y, int hunger, int life, Image image, String name, int price) {
-		super(x,y,1,1,1,image);
+	public Food(int x, int y, int hunger, int life, String name, int price) {
+		super(x,y,1,1,1);
 		this.price = price;
 		this.hunger = hunger;
 		this.life = life;

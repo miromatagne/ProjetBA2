@@ -13,14 +13,12 @@ public abstract class GameObject implements Serializable{
     protected int color;
     protected int length;
     protected int width;
-    protected Image image;
 
-    public GameObject(int X, int Y, int length, int width, Image image){
+    public GameObject(int X, int Y, int length, int width){
         this.posX = X;
         this.posY = Y;
         this.length = length;
         this.width = width;
-        this.image = image;
     }
     
 
@@ -74,10 +72,6 @@ public abstract class GameObject implements Serializable{
     	catch(Exception e){
     	}
 		return tempImage;
-	}
-	
-	public Image getIm() {
-		return this.image;
 	}
 	
 }

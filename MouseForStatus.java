@@ -33,6 +33,7 @@ public class MouseForStatus implements MouseListener, Serializable {
 		System.out.println("mon a "+ a + " mon b "+ b );
 		if(x>=0  && x <= 4 && y>=25 && y<=29 ){
 			if(x+1+5*(y-25) <= status.getActivePlayer().getInventory().size()) { 
+				status.getMouseController().setActiveObject(x,y);
 		a = x ;
 		b = y ;
 		status.setA(a);

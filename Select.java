@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Select extends JFrame implements Serializable{
+public class Select extends JFrame {
 	
 	public Select() {
 		JFrame frame = new JFrame("Sélection");

@@ -13,9 +13,10 @@ import javax.swing.JFrame;
 import Controller.Mouse;
 import Model.EnergyLoss;
 import Model.Game;
+import Model.ModelWindow;
 import Model.Refresh;
 
-public class ReloadListener implements ActionListener,Serializable{
+public class ReloadListener implements ActionListener{
 	JFrame frame;
 	public ReloadListener(JFrame frame) {
 		this.frame = frame;
@@ -23,7 +24,9 @@ public class ReloadListener implements ActionListener,Serializable{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Game g = null;
+		frame.dispose();
 		frame.setVisible(false);
+
 	      
         
         try {
@@ -33,7 +36,10 @@ public class ReloadListener implements ActionListener,Serializable{
 	 		Mouse.setGame(g);
 	 		
 	 		g.getWindows().get(0).makeActive();
-	 		
+	 		//g.getWindows().get(0).setFocusable(true);
+	 		for(ModelWindow m : g.getWindows()) {
+	 			m.newWindow();
+	 		}
 	 		g.getActiveWindow();
 	 		
 	 		Thread r1 = new Thread(new Refresh(g));

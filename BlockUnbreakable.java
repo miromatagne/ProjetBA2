@@ -4,8 +4,8 @@ import java.awt.Image;
 
 public class BlockUnbreakable extends Block {
 
-    public BlockUnbreakable(int X, int Y, int length, int width, Image image) {
-        super(X, Y, length, width, image);
+    public BlockUnbreakable(int X, int Y, int length, int width) {
+        super(X, Y, length, width);
     }
 
     @Override

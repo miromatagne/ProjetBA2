@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 import javax.swing.JFrame;
 
-public class NewListener implements ActionListener,Serializable{
+public class NewListener implements ActionListener{
 	JFrame frame;
 	public NewListener(JFrame frame) {
 		this.frame = frame;

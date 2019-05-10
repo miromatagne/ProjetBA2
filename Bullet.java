@@ -4,9 +4,8 @@ import java.awt.Image;
 
 public class Bullet extends BlockBreakable  {
 	int direction; 
-	static Image image = getImage("Bullet.PNG");
 	public Bullet(int X, int Y) {
-		super(X, Y, 1, 1, 2, image);
+		super(X, Y, 1, 1, 2);
 		// TODO Auto-generated constructor stub
 	}
 	

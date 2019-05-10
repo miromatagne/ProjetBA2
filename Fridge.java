@@ -4,9 +4,8 @@ import java.awt.Image;
 
 public class Fridge extends Shop {
 
-	static Image image = getImage("Bed.JPG");
 	public Fridge(int X, int Y) {
-		super(X, Y,image);
+		super(X, Y);
 		SetShop();
 		SetStockandCatalogue(new Avocado(1,1), 10);
 		SetStockandCatalogue(new Apple(1,1), 10);

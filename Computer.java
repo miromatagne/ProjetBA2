@@ -10,11 +10,10 @@ public class Computer extends BlockUnbreakable implements Gain,Activable,SBableO
 	protected int color;
 	Player active_player;
 	protected static int rapporte = 10;
-	static Image image = getImage("Computer.PNG");
 	static String name = "Computer";
 
 	public Computer(int X, int Y) {
-			super(X,Y,1,1,image);
+			super(X,Y,1,1);
 		}
 	
 	public void makeMoney(Player p) {

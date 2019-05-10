@@ -24,6 +24,9 @@ import Model.Game;
 		public static void setGame(Game game) {
 			Mouse.game=game;
 		}
-
+		
+	public void setActiveObject(int x, int y) {
+		game.setActiveObject(x, y);
+	}
 		
 	}

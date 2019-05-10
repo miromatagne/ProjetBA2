@@ -12,11 +12,9 @@ public class Stairs extends BlockUnbreakable implements Activable {
 	private int y;
 	private Player active_player;
 	private Game g;
-	private ArrayList<Window> windows;
-	static Image image1 = getImage("stairs1.PNG");
-	static Image image2 = getImage("stairs2.PNG");
-	public Stairs(int x, int y, ArrayList<Window> windows, int etageB, int etageH, Game g) {
-		super(x,y,1,1,image1);
+	private ArrayList<ModelWindow> windows;
+	public Stairs(int x, int y, ArrayList<ModelWindow> windows, int etageB, int etageH, Game g) {
+		super(x,y,1,1);
 		this.x = x;
 		this.y = y;
 		this.windows = windows;
@@ -29,13 +27,13 @@ public class Stairs extends BlockUnbreakable implements Activable {
 	public void activate() {
 		// TODO Auto-generated method stub
 		g.notifyObservers();
-		Window windowB = windows.get(etageB);
-		Window windowH = windows.get(etageH);
-		windowB.players.remove(active_player);
-		windowH.players.add(active_player);
-		windowB.objects.remove(active_player);
-		windowH.objects.add(active_player);
-		windowH.setPlayers(windowH.players);
+		ModelWindow windowB = windows.get(etageB);
+		ModelWindow windowH = windows.get(etageH);
+		windowB.getPlayers().remove(active_player);
+		windowH.getPlayers().add(active_player);
+		windowB.getObjects().remove(active_player);
+		windowH.getObjects().add(active_player);
+		windowH.setPlayers(windowH.getPlayers());
 		windowH.makeActive();
 		windowB.makeUnactive();
 		g.notifyObservers();

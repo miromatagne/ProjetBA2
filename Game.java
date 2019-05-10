@@ -16,48 +16,48 @@ import java.util.List;
 
 public class Game implements DeletableObserver, Observer,Serializable {
     private Player active_player = null; 
-    private static ArrayList<Window> windows;
+    private ArrayList<ModelWindow> windows;
     private int nbBebe;
     private int nbAdulte;
     private int nbVieux;
     ObjectFactory objectFactory = new ObjectFactory();
     //private int numberOfBreakableBlocks = 40;
-    public Game(ArrayList<Window> windows, int nbBebe, int nbAdulte, int nbVieux) {
-        Game.windows = windows;
+    public Game(ArrayList<ModelWindow> windows, int nbBebe, int nbAdulte, int nbVieux) {
+        this.windows = windows;
         this.nbBebe = nbBebe;
         this.nbAdulte = nbAdulte;
         this.nbVieux = nbVieux;
-        Window windowInit = windows.get(0);
+        ModelWindow windowInit = windows.get(0);
         for (int i = 0; i < nbAdulte; i++) {
         	Adult a = new Adult(10+i, 10);
-        	windowInit.objects.add(a);
-        	windowInit.players.add(a);
+        	windowInit.getObjects().add(a);
+        	windowInit.getPlayers().add(a);
             Thread t1 = new Thread(new EnergyLoss(a));
     		t1.start();
         	//window.setPlayer(p);
         }
         for (int i = 0; i < nbVieux; i++) {
         	Eldery e = new Eldery(10+i, 11);
-        	windowInit.objects.add(e);
-        	windowInit.players.add(e);
+        	windowInit.getObjects().add(e);
+        	windowInit.getPlayers().add(e);
             Thread t1 = new Thread(new EnergyLoss(e));
     		t1.start();
         	//window.setPlayer(p);
         }
         for (int i = 0; i < nbBebe; i++) {
         	Baby baby = new Baby(10+i, 12);
-        	windowInit.objects.add(baby);
-        	windowInit.players.add(baby);
+        	windowInit.getObjects().add(baby);
+        	windowInit.getPlayers().add(baby);
             Thread t1 = new Thread(new EnergyLoss(baby));
     		t1.start();
         	//window.setPlayer(p);
         }
         
         //active_window = window;
-        windowInit.setPlayers(windowInit.players);
+        windowInit.setPlayers(windowInit.getPlayers());
         windowInit.setActiveWindow();
         //players.get(0); //obtenir le premier joueur
-        active_player = windowInit.players.get(0);
+        active_player = windowInit.getPlayers().get(0);
         active_player.setActivePlayer();//premier joueur actif par défaut
 		Thread r1 = new Thread(new Refresh(this));
         r1.start();
@@ -94,7 +94,6 @@ public class Game implements DeletableObserver, Observer,Serializable {
 		        		ar.add(str[i]);
 		        	}
 		        }
-		        System.out.println(ar.size());
 		        bufferedReader.close();
 		        if(nbColumnsMin != nbColumnsMax || nbColumns != windows.get(k).getMapSize() || nbLines != windows.get(k).getMapSize()) {
 		        	throw new Exception("Les dimensions du fichier sont incompatibles");
@@ -114,7 +113,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
 				obj = objectFactory.createObject(o, colonne, ligne);
 				this.notifyObservers();
 				if(obj != null) {
-					windows.get(k).objects.add(obj);
+					windows.get(k).getObjects().add(obj);
 				}
 				if(obj instanceof Deletable) {
 					((Deletable) obj).attachDeletable(this);
@@ -129,20 +128,20 @@ public class Game implements DeletableObserver, Observer,Serializable {
 			}
     	}
         Stairs s = new Stairs(12, 8,windows, 0, 1, this);
-        windowInit.objects.add(s);
+        windowInit.getObjects().add(s);
         for(int i = 1; i < windows.size() - 1; i++) {
         	Stairs s1 = new Stairs(12, 8,windows, i, i-1, this);
         	Stairs s2 = new Stairs(12, 9,windows, i, i+1, this);
-        	windows.get(i).objects.add(s1);
-        	windows.get(i).objects.add(s2);
+        	windows.get(i).getObjects().add(s1);
+        	windows.get(i).getObjects().add(s2);
         }
         Stairs s3 = new Stairs(12, 8,windows, windows.size()-1, windows.size()-2, this);
-        windows.get(windows.size()-1).objects.add(s3);
+        windows.get(windows.size()-1).getObjects().add(s3);
 
         getActiveWindow().setObjects();
 
-        for (Window window : windows) {
-        	window.setGameObjects(window.objects);
+        for (ModelWindow window : windows) {
+        	window.setGameObjects(window.getObjects());
         	notifyView();
         }
     }
@@ -175,7 +174,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
     }
     public void action() {
         Activable aimedObject = null;
-		for(GameObject object : getActiveWindow().objects){
+		for(GameObject object : getActiveWindow().getObjects()){
 			if(object.isAtPosition(active_player.getFrontX(),active_player.getFrontY())){ //Si l'objet est situé devant le personnage
 			    if(object instanceof Activable){
 			        aimedObject = (Activable) object;
@@ -191,7 +190,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
     
     public void feed() {
     	Baby aimedBaby = null;
-    	for(GameObject object : getActiveWindow().objects){
+    	for(GameObject object : getActiveWindow().getObjects()){
 			if(object.isAtPosition(active_player.getFrontX(),active_player.getFrontY())){ //Si l'objet est situé devant le personnage
 			    if(object instanceof Baby){
 			        aimedBaby = (Baby) object;
@@ -220,7 +219,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
     }
 
     public ArrayList<GameObject> getGameObjects() {
-        return this.getActiveWindow().objects;
+        return this.getActiveWindow().getObjects();
     }
     
 
@@ -228,7 +227,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
     synchronized public void delete(Deletable ps, ArrayList<GameObject> loot) {
     	this.getGameObjects().remove(ps); //Permet de supprimer des objets dans la liste d'objets
         if (loot != null) {
-        	getActiveWindow().objects.addAll(loot);
+        	getActiveWindow().getObjects().addAll(loot);
         }
         notifyView();
     }
@@ -240,7 +239,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
     }
 
 	public void stop() {
-		getActiveWindow().dispatchEvent(new WindowEvent(getActiveWindow(), WindowEvent.WINDOW_CLOSING)); //Ferme le jeu
+		getActiveWindow().stop();
 	}
 
 
@@ -248,12 +247,12 @@ public class Game implements DeletableObserver, Observer,Serializable {
 		boolean move = true;
 		boolean change = false;
 		Player pl = null;
-		for (GameObject o : getActiveWindow().objects) {
+		for (GameObject o : getActiveWindow().getObjects()) {
 			if (x == o.getPosX() && y == o.getPosY()) {
 				move = false;
 			}
 		}
-		for (Player p : getActiveWindow().players) {
+		for (Player p : getActiveWindow().getPlayers()) {
 			if (x == p.getPosX() && y == p.getPosY()) {
 				change = true;
 				pl = p;
@@ -269,9 +268,9 @@ public class Game implements DeletableObserver, Observer,Serializable {
 			this.notifyObservers();
 		}
 	}
-	public Window getActiveWindow() {
-		Window active_window = null;
-		for (Window window : windows) {
+	public ModelWindow getActiveWindow() {
+		ModelWindow active_window = null;
+		for (ModelWindow window : windows) {
 			if (window.isActiveWindow()) {
 				active_window = window;
 			}
@@ -283,7 +282,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
 	}
 	public void addtoInventory(int x, int y) {
 		ArrayList<GameObject> obj = new ArrayList<GameObject>();
-		for(GameObject i : getActiveWindow().objects) {
+		for(GameObject i : getActiveWindow().getObjects()) {
 			if(i.isAtPosition(x, y) && i.isAddable()) {
 				if(i.isAtPosition(active_player.getFrontX(),active_player.getFrontY())){
 					active_player.addtoinventory(i,obj);
@@ -292,7 +291,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
 			}
 		}
 		for(GameObject j : obj) {
-			getActiveWindow().objects.remove(j);
+			getActiveWindow().getObjects().remove(j);
 		}
 		notifyView();
 	}
@@ -301,15 +300,12 @@ public class Game implements DeletableObserver, Observer,Serializable {
 
 	@Override
 	public void notifyObservers() {
-		for (GameObject o : getActiveWindow().objects) {
+		for (GameObject o : getActiveWindow().getObjects()) {
 			if (o instanceof Activable) {
 				((Activable) o).updateActivePlayer(active_player);
 			}
 			if (o instanceof Gun) {
 				((Gun) o).updateActiveWindow(getActiveWindow());
-			}
-			else if (o instanceof Shop) {
-				((Shop) o).updateActiveWindow(getActiveWindow());
 			}
 			else if (o instanceof Player) {
 				((Player) o).updateActiveWindow(getActiveWindow());
@@ -332,7 +328,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
 			windows.get(0).makeActive();	
 		}
 	}
-	public ArrayList<Window> getWindows(){
+	public ArrayList<ModelWindow> getWindows(){
 		return this.windows;
 	}
 	public void removeFromInventory(int x, int y) {
@@ -341,7 +337,7 @@ public class Game implements DeletableObserver, Observer,Serializable {
 		for(int i =0; i<6; i++) {
 			for(int j = 0; j<6; j++){
 				if(x == i && y ==25+j) {
-					for(GameObject k : getActiveWindow().objects) {
+					for(GameObject k : getActiveWindow().getObjects()) {
 						if(k.isAtPosition(active_player.getFrontX(),active_player.getFrontY())) {
 							alrthere = true;
 						}
@@ -353,8 +349,8 @@ public class Game implements DeletableObserver, Observer,Serializable {
 							((BlockBreakable) obj).attachDeletable(this);
 						}
 						obj.setPosition(active_player.getFrontX(),active_player.getFrontY());
-						getActiveWindow().objects.add(obj);
-						getActiveWindow().getStatus().setActiveObject();
+						getActiveWindow().getObjects().add(obj);
+						setActiveObject(0,25);
 					}					
 				}				
 			}
@@ -380,5 +376,22 @@ public class Game implements DeletableObserver, Observer,Serializable {
 		oos.flush();
 		oos.close();
 	}
-
+	
+	public void setActiveObject(int x, int y) {
+		GameObject obj = null;
+		boolean c = false;
+		System.out.println(active_player.getInventory().size());
+		if(active_player.getInventory().size() != 0) {
+			obj = active_player.getInventory().get(x+5*(y-25));
+			System.out.println(obj);
+			c = true;
+		}
+		if (c) {
+		for(GameObject o : getActiveWindow().getObjects()) {
+			if (o instanceof Shop) {
+				((Shop)o).setActiveObject(obj);
+			}
+		}
+	}
+	}
 }

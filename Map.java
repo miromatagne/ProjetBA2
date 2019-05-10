@@ -1,15 +1,42 @@
 package View;
 
+import Model.Adult;
 import Model.Apple;
+import Model.Avocado;
+import Model.Baby;
 import Model.Bed;
 import Model.Block;
+import Model.Boisson;
+import Model.Bread;
+import Model.Bullet;
+import Model.Chair;
+import Model.Cheese;
+import Model.Cherry;
+import Model.Chicken;
 import Model.Computer;
+import Model.Cookie;
+import Model.Couch;
 import Model.Directable;
+import Model.Eldery;
+import Model.Fridge;
+import Model.FurnitureStore;
 import Model.GameObject;
+import Model.Gun;
+import Model.Mur;
+import Model.Panade;
 import Model.Pill;
+import Model.Shower;
+import Model.Shrimp;
+import Model.Soda;
 import Model.Stairs;
+import Model.Strawberry;
+import Model.Table;
+import Model.Target;
 import Model.Toilet;
+import Model.Tomato;
+import Model.Tree;
 import Model.Vodka;
+import Model.Watermelon;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -28,12 +55,13 @@ import javax.swing.JPanel;
 import Controller.Mouse;
 import Controller.SourisListener;
 
-public class Map extends JPanel implements Serializable{
+public class Map extends JPanel {
     private ArrayList<GameObject> objects = null; //La classe GameObject sont des objets ayant une position et une couleur
     public final int MAP_SIZE = 25;               // final permet d'empecher la modification
     private int BLOC_SIZE = 38;
     private Mouse mouseController = null;
     public int etage;
+    private static ArrayList<Image> imlist = new ArrayList<Image>();
     public SourisListener souris = new SourisListener(this);
 
     public Map() {
@@ -41,6 +69,40 @@ public class Map extends JPanel implements Serializable{
         this.requestFocusInWindow();
         this.setPreferredSize(new Dimension(MAP_SIZE*BLOC_SIZE, MAP_SIZE*BLOC_SIZE));
         addMouseListener(souris);
+        imlist.add(getImage("Apple.PNG"));
+        imlist.add(getImage("Adult1.PNG"));
+        imlist.add(getImage("Avocado.PNG"));
+        imlist.add(getImage("Baby.PNG"));
+        imlist.add(getImage("Bed.PNG"));
+        imlist.add(getImage("Boisson.PNG"));
+        imlist.add(getImage("Bread.PNG"));
+        imlist.add(getImage("Bullet.PNG"));
+        imlist.add(getImage("Chair.PNG"));
+        imlist.add(getImage("Cheese.PNG"));
+        imlist.add(getImage("Cherry.PNG"));
+        imlist.add(getImage("Chicken.PNG"));
+        imlist.add(getImage("Computer.PNG"));
+        imlist.add(getImage("Cookie.PNG"));
+        imlist.add(getImage("Couch.PNG"));
+        imlist.add(getImage("Eldery.PNG"));
+        imlist.add(getImage("Fridge.PNG"));
+        imlist.add(getImage("Gun.PNG"));
+        imlist.add(getImage("Wall3.PNG"));
+        imlist.add(getImage("Panade.PNG"));
+        imlist.add(getImage("Pill.PNG"));
+        imlist.add(getImage("FurnitureShop.PNG"));
+        imlist.add(getImage("Shower2.PNG"));
+        imlist.add(getImage("Shrimp.PNG"));
+        imlist.add(getImage("Soda.PNG"));
+        imlist.add(getImage("Stairs.PNG"));
+        imlist.add(getImage("Strawberry.PNG"));
+        imlist.add(getImage("Table.PNG"));
+        imlist.add(getImage("Target.PNG"));
+        imlist.add(getImage("Toilet.PNG"));
+        imlist.add(getImage("Tomato.PNG"));
+        imlist.add(getImage("Tree.PNG"));
+        imlist.add(getImage("Vodka.PNG"));
+        imlist.add(getImage("MelonWater.PNG"));
     }
     
     static Image parquet = getImage("parquet3.PNG");
@@ -55,70 +117,11 @@ public class Map extends JPanel implements Serializable{
         
         // que représente le g. et comment sait-on de quoi on définit la couleur ? lorsqu'on définit g.setcolor(couleur) tout les dessin qui suivent se font dans la couleur définie
         if(objects != null) {
-        for (GameObject object : this.objects) { // dans cette boucle, on va colorer certains rectangles correspondant a des objets, on parcourt en effet une liste d'objet, 
-        	// qui on le sait son caractériser par une position et une couleur(un chiffre en réalité auquel on associe une couleur ci-dessous)
-        	// on parcourt notre liste d'objet, pour chaque objet on en prend la position, et on va tracer un rectangle en cette position, on attribue ensuite une couleur a ce rectangle
-        	// on sait ainsi représenter des objets sur la map, cette partie du code nous permet de représenter des objets ou bien de créer des pièces.
+        for (GameObject object : this.objects) {
         	int x = object.getPosX();
             int y = object.getPosY();
-            int color = object.getColor();
-            if (color == 0) {
-                g.setColor(Color.DARK_GRAY); 
-            } else if (color == 1) {
-                g.setColor(Color.RED);
-            } else if (color == 2) {
-                g.setColor(Color.BLUE);
-            } else if (color == 3) {
-                g.setColor(Color.GREEN);
-            } else if (color == 4) {
-                g.setColor(Color.RED);
-            } else if (color == 5) {
-                g.setColor(Color.ORANGE);
-            } else if (color == 9 ) {
-            	g.setColor(Color.BLACK);
-            }
-            
-            //if(object instanceof Apple) {
-            g.drawImage(object.getIm(), x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE,object.getLength()*BLOC_SIZE, null);
+            g.drawImage(getIm(object), x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE,object.getLength()*BLOC_SIZE, null);
             this.repaint();
-           /*}
-            else if(object instanceof Computer) {
-            	g.drawImage(computer, x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE-2,object.getLength()*BLOC_SIZE-2, null);
-                this.repaint();
-            }
-            else if(object instanceof Pill) {
-            	g.drawImage(pill, x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE-2,object.getLength()*BLOC_SIZE-2, null);
-                this.repaint();
-            }
-            else if(object instanceof Stairs) {
-            	if(((Stairs) object).getEtageB() < ((Stairs) object).getEtageH()) {
-            		g.drawImage(s1, x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE-2,object.getLength()*BLOC_SIZE-2, null);
-            	}
-            	else {
-            		g.drawImage(s2, x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE-2,object.getLength()*BLOC_SIZE-2, null);
-            	}
-                this.repaint();
-            }
-            else if(object instanceof Vodka) {
-            	g.drawImage(vodka, x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE-2,object.getLength()*BLOC_SIZE-2, null);
-                this.repaint();
-            }
-            else if(object instanceof Bed) {
-            	g.drawImage(bed, x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE-2,object.getLength()*BLOC_SIZE-2, null);
-                this.repaint();
-            }
-            else if(object instanceof Toilet) {
-            	g.drawImage(toilet, x*BLOC_SIZE ,y*BLOC_SIZE,object.getWidth()*BLOC_SIZE-2,object.getLength()*BLOC_SIZE-2, null);
-                this.repaint();
-            }
-            else {
-            // selon les différents cas on change le set color
-            // les rectangles dessinés ci-dessous auront différentes couleurs
-            	g.fillRect(x * BLOC_SIZE, y * BLOC_SIZE, BLOC_SIZE - 2, BLOC_SIZE - 2);
-            	g.setColor(Color.BLACK);
-            	g.drawRect(x * BLOC_SIZE, y * BLOC_SIZE, BLOC_SIZE - 2, BLOC_SIZE - 2);
-            }*/
-            // Decouper en fontions
             if(object instanceof Directable) {
                 int direction = ((Directable) object).getDirection();
                 
@@ -177,4 +180,114 @@ public class Map extends JPanel implements Serializable{
 	public Mouse getMouseController() {
 		return this.mouseController;
 	}
+	public void setImages(ArrayList<Image> i) {
+		Map.imlist = i;
+	}
+	public Image getIm(GameObject o) {
+    	if (o instanceof Apple) {
+    		return imlist.get(0);
+    	}
+    	else if (o instanceof Adult) {
+    		return imlist.get(1);
+    	}
+    	else if (o instanceof Avocado) {
+    		return imlist.get(2);
+    	}
+    	else if (o instanceof Baby) {
+    		return imlist.get(3);
+    	}
+    	else if (o instanceof Bed) {
+    		return imlist.get(4);
+    	}
+    	else if (o instanceof Boisson) {
+    		return imlist.get(5);
+    	}
+    	else if (o instanceof Bread) {
+    		return imlist.get(6);
+    	}
+    	else if (o instanceof Bullet) {
+    		return imlist.get(7);
+    	}
+    	else if (o instanceof Chair) {
+    		return imlist.get(8);
+    	}
+    	else if (o instanceof Cheese) {
+    		return imlist.get(9);
+    	}
+    	else if (o instanceof Cherry) {
+    		return imlist.get(10);
+    	}
+    	else if (o instanceof Chicken) {
+    		return imlist.get(11);
+    	}
+    	else if (o instanceof Computer) {
+    		return imlist.get(12);
+    	}
+    	else if (o instanceof Cookie) {
+    		return imlist.get(13);
+    	}
+    	else if (o instanceof Couch) {
+    		return imlist.get(14);
+    	}
+    	else if (o instanceof Eldery) {
+    		return imlist.get(15);
+    	}
+    	else if (o instanceof Fridge) {
+    		return imlist.get(16);
+    	}
+    	else if (o instanceof Gun) {
+    		return imlist.get(17);
+    	}
+    	else if (o instanceof Mur) {
+    		return imlist.get(18);
+    	}
+    	else if (o instanceof Panade) {
+    		return imlist.get(19);
+    	}
+    	else if (o instanceof Pill) {
+    		return imlist.get(20);
+    	}
+    	else if (o instanceof FurnitureStore) {
+    		return imlist.get(21);
+    	}
+    	else if (o instanceof Shower) {
+    		return imlist.get(22);
+    	}
+    	else if (o instanceof Shrimp) {
+    		return imlist.get(23);
+    	}
+    	else if (o instanceof Soda) {
+    		return imlist.get(24);
+    	}
+    	else if (o instanceof Stairs) {
+    		return imlist.get(25);
+    	}
+    	else if (o instanceof Strawberry) {
+    		return imlist.get(26);
+    	}
+    	else if (o instanceof Table) {
+    		return imlist.get(27);
+    	}
+    	else if (o instanceof Target) {
+    		return imlist.get(28);
+    	}
+    	else if (o instanceof Toilet) {
+    		return imlist.get(29);
+    	}
+    	else if (o instanceof Tomato) {
+    		return imlist.get(30);
+    	}
+    	else if (o instanceof Tree) {
+    		return imlist.get(31);
+    	}
+    	else if (o instanceof Vodka) {
+    		return imlist.get(32);
+    	}
+    	else if (o instanceof Watermelon) {
+    		return imlist.get(33);
+    	}
+    	else {
+    		return null;
+    	}
+    }
 }

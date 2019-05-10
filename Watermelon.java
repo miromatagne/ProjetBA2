@@ -8,7 +8,7 @@ public class Watermelon extends Food {
     static Image image = getImage("MelonWater.PNG");
 	
 	public Watermelon(int X, int Y) {
-		super(X,Y,hunger,life,image,"Watermelon",5);
+		super(X,Y,hunger,life,"Watermelon",5);
 		// TODO Auto-generated constructor stub
 	}
 }

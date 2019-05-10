@@ -20,12 +20,12 @@ import View.Window;
 	    boolean inBed = false;
 	    boolean inShower = false;
 	    public int speed = 0;
-	    Window w;
+	    ModelWindow w;
 	    
 	   
 	
-	    public Player(int x, int y, Image image) {
-	        super(x, y, 1, 1, image); //Le 2 est la couleur
+	    public Player(int x, int y) {
+	        super(x, y, 1, 1); //Le 2 est la couleur
 	    }
 	
 	    public void move(int X, int Y) {
@@ -282,12 +282,12 @@ import View.Window;
 	    	}	
 	    }
 	    
-	    public void updateActiveWindow(Window w) {
+	    public void updateActiveWindow(ModelWindow w) {
 	    	this.w = w;
 	    }
 	    
 	    public void kill() {
-	    	w.objects.remove(this);
+	    	w.getObjects().remove(this);
 	    }
 	    
 	}

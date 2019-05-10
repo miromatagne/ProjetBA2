@@ -4,9 +4,8 @@ import java.awt.Image;
 
 public class Pill extends BlockBreakable {
 	int health = 20;
-	static Image image = getImage("Pill.PNG");
 	public Pill(int X, int Y) {
-		super(X, Y, 1, 1, 4, image);
+		super(X, Y, 1, 1, 4);
 		}
 
 	Player active_player = null;

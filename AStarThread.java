@@ -9,9 +9,9 @@ import View.Window;
 		private Player p;
 		private int x;
 		private int y;
-		private Window window;
+		private ModelWindow window;
 	
-		public AStarThread(Game g, Player p, int x, int y, Window window) {
+		public AStarThread(Game g, Player p, int x, int y, ModelWindow window) {
 			this.g= g;
 			this.p = p;
 			this.x = x;
@@ -30,7 +30,7 @@ import View.Window;
 				
 				
 				if(p.NotDrunk()){
-				direction = (new AStar(p.getPosX(), p.getPosY(), x, y, window.objects)).getNextStep(); 
+				direction = (new AStar(p.getPosX(), p.getPosY(), x, y, window.getObjects())).getNextStep(); 
 				//On obtient la direction à suivre en appelant getNextStep de la classe Astar 
 				switch (direction) {
 					//On fait bouger le personnage
@@ -48,7 +48,7 @@ import View.Window;
 			}
 				else if(p.BitDrunk()){ 
 					if(i != 1) {
-					direction = (new AStar(p.getPosX(), p.getPosY(), x, y, window.objects)).getNextStep(); 
+					direction = (new AStar(p.getPosX(), p.getPosY(), x, y, window.getObjects())).getNextStep(); 
 					//On obtient la direction à suivre en appelant getNextStep de la classe Astar 
 					switch (direction) {
 						//On fait bouger le personnage
@@ -89,7 +89,7 @@ import View.Window;
 				}
 			} else if(p.Drunk()){ 
 				if(i != 1 && i !=3  ) {
-				direction = (new AStar(p.getPosX(), p.getPosY(), x, y, window.objects)).getNextStep(); 
+				direction = (new AStar(p.getPosX(), p.getPosY(), x, y, window.getObjects())).getNextStep(); 
 				//On obtient la direction à suivre en appelant getNextStep de la classe Astar 
 				switch (direction) {
 					//On fait bouger le personnage
@@ -130,7 +130,7 @@ import View.Window;
 			}
 		} else if(p.DeadDrunk()){ 
 			if(i != 1 && i !=3 && i!=5 ) {
-			direction = (new AStar(p.getPosX(), p.getPosY(), x, y, window.objects)).getNextStep(); 
+			direction = (new AStar(p.getPosX(), p.getPosY(), x, y, window.getObjects())).getNextStep(); 
 			//On obtient la direction à suivre en appelant getNextStep de la classe Astar 
 			switch (direction) {
 				//On fait bouger le personnage

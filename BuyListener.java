@@ -9,7 +9,7 @@ import java.io.Serializable;
 import Model.Player;
 import Model.Shop;
 
-public class BuyListener implements ActionListener,Serializable{
+public class BuyListener implements ActionListener{
     Shop shop;
 	
 	public BuyListener(Shop shop) {
@@ -18,7 +18,7 @@ public class BuyListener implements ActionListener,Serializable{
 
 
     public void actionPerformed(ActionEvent e) {
-    	shop.mag.Buy();
+    	shop.Buy();
 		
 		
 	}  
