@@ -19,6 +19,7 @@ public class ShowerThread implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		s.notInS();
 	}
 	
 }

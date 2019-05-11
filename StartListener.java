@@ -64,26 +64,6 @@ public class StartListener implements ActionListener{
 	        	 window.setKeyListener(keyboard);
 	             window.setMouseListener(mouse);
 	        }
-	        music();
 		}
-	}
-	public void music() {
-		AudioPlayer MGP = AudioPlayer.player;
-		AudioStream BGM;
-		AudioData MD;
-		ContinuousAudioDataStream loop = null;
-		try {
-			InputStream test = new FileInputStream("C:\\Users\\Miro-Manuel\\Dropbox\\ULB\\BA2\\Projet Info\\View\\Son.wav");
-			BGM = new AudioStream(test);
-			AudioPlayer.player.start(BGM);
-			//MD = BGM.getData();
-			//loop = new ContinuousAudioDataStream(MD);
-		} catch (FileNotFoundException e) {
-			System.out.println("Le fichier n'existe pas à cette adresse.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		MGP.start(loop);
-		
 	}
 }

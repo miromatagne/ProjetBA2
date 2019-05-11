@@ -54,7 +54,7 @@ public class Mag extends JPanel {
         imlist.add(getImage("Eldery.PNG"));
         imlist.add(getImage("Fridge.PNG"));
         imlist.add(getImage("Gun.PNG"));
-        imlist.add(getImage("Wall3.PNG"));
+        imlist.add(getImage("Wall3.jpg"));
         imlist.add(getImage("Panade.PNG"));
         imlist.add(getImage("Pill.PNG"));
         imlist.add(getImage("FurnitureShop.PNG"));

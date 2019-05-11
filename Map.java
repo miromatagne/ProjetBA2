@@ -87,7 +87,7 @@ public class Map extends JPanel {
         imlist.add(getImage("Eldery.PNG"));
         imlist.add(getImage("Fridge.PNG"));
         imlist.add(getImage("Gun.PNG"));
-        imlist.add(getImage("Wall3.PNG"));
+        imlist.add(getImage("Wall3.jpg"));
         imlist.add(getImage("Panade.PNG"));
         imlist.add(getImage("Pill.PNG"));
         imlist.add(getImage("FurnitureShop.PNG"));
@@ -105,7 +105,7 @@ public class Map extends JPanel {
         imlist.add(getImage("MelonWater.PNG"));
     }
     
-    static Image parquet = getImage("parquet3.PNG");
+    static Image parquet = getImage("Fond.PNG");
 
     public void paint(Graphics g) {
     	//float alpha = 0.5F;
