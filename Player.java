@@ -11,10 +11,13 @@ import View.Window;
 	    int direction = EAST;
 	    int floor = 0;
 	    int faim = 100;
+	    int a = 0;
+	    int b = 25;
 	    int money = 1000;
 	    int vessie = 0;
 	    int hygiene = 100;
 	    double alcoolemie = 0;
+	    GameObject active_object;
 	    ArrayList<GameObject> inventory = new ArrayList<GameObject>();
 	    public static Player active_player;
 	    boolean inBed = false;
@@ -288,6 +291,22 @@ import View.Window;
 	    
 	    public void kill() {
 	    	w.getObjects().remove(this);
+	    }
+	    public void setActiveObject(int a, int b) {
+	    	this.a = a;
+	    	this.b= b;
+	    	active_object = this.getInventory().get(a+5*(b-25));
+	    }
+	    public int getA() {
+	    	return a;
+	    }
+	    
+	    public int getB() {
+	    	return b;
+	    }
+	    
+	    public GameObject getActiveObject() {
+	    	return this.active_object;
 	    }
 	    
 	}

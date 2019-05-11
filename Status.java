@@ -62,11 +62,8 @@ public class Status extends JPanel {
 	private int BLOCK_SIZE = 25;
 	private int PREVIEW_SIZE = 80;
 	private static ArrayList<Image> imlist = new ArrayList<Image>();
-	private int a = 0;
-	private int b = 25;
 	private Mouse mouseController = new Mouse();
 	private ArrayList<GameObject> objects;
-	private GameObject active_object;
 	private Player active_player;
 	private MouseForStatus mouse = new MouseForStatus(this);
 
@@ -192,7 +189,7 @@ public class Status extends JPanel {
 	    
 	    }
 	    g.setColor(Color.RED);
-	    g.drawRect(a*BLOCK_SIZE, b*BLOCK_SIZE , BLOCK_SIZE, BLOCK_SIZE);
+	    g.drawRect(active_player.getA()*BLOCK_SIZE, active_player.getB()*BLOCK_SIZE , BLOCK_SIZE, BLOCK_SIZE);
 	    
 	    int v = -1;
 		int w = 0;
@@ -206,11 +203,7 @@ public class Status extends JPanel {
 	            g.drawImage(getIm(obj), v*BLOCK_SIZE + 2 ,w*BLOCK_SIZE+627,BLOCK_SIZE-5,BLOCK_SIZE-5, null);
 	            this.repaint();
 	        } 
-				
-			if(active_player.getInventory().size() != 0) {
-				active_object = active_player.getInventory().get(a+5*(b-25));   // on défini l'active_object de notre inventaire apd du clic de la souris
-			
-			}
+
 		}
 
     public void redraw() {
@@ -225,26 +218,12 @@ public class Status extends JPanel {
 		this.players = players;
 	}
 	
-	public GameObject getActiveObject() {
-		return this.active_object;
-	}
-	public void setActiveObject() {
-		a = 0 ;
-		b = 25;
-	}
-	
 	public Mouse getMouseController() {
 		return this.mouseController;
 	}
 	
 	public Player getActivePlayer() {
 		return active_player;
-	}
-	public void setA(int a) {
-		this.a = a;
-	}
-	public void setB(int b) {
-		this.b = b;
 	}
 	
 	public void setImages(ArrayList<Image> i) {

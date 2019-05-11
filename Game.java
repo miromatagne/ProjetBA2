@@ -378,20 +378,9 @@ public class Game implements DeletableObserver, Observer,Serializable {
 	}
 	
 	public void setActiveObject(int x, int y) {
-		GameObject obj = null;
-		boolean c = false;
 		System.out.println(active_player.getInventory().size());
 		if(active_player.getInventory().size() != 0) {
-			obj = active_player.getInventory().get(x+5*(y-25));
-			System.out.println(obj);
-			c = true;
+			active_player.setActiveObject(x,y);
 		}
-		if (c) {
-		for(GameObject o : getActiveWindow().getObjects()) {
-			if (o instanceof Shop) {
-				((Shop)o).setActiveObject(obj);
-			}
-		}
-	}
 	}
 }

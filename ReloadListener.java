@@ -8,13 +8,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import Controller.Mouse;
 import Model.EnergyLoss;
 import Model.Game;
+import Model.GameObject;
 import Model.ModelWindow;
 import Model.Refresh;
+import Model.Shop;
 
 public class ReloadListener implements ActionListener{
 	JFrame frame;
@@ -39,6 +42,12 @@ public class ReloadListener implements ActionListener{
 	 		//g.getWindows().get(0).setFocusable(true);
 	 		for(ModelWindow m : g.getWindows()) {
 	 			m.newWindow();
+	 			for(GameObject o : m.getObjects()) {
+	 				if(o instanceof Shop) {
+	 					((Shop)o).newMag();
+	 					((Shop)o).SetShop();
+	 				}
+	 			}
 	 		}
 	 		g.getActiveWindow();
 	 		

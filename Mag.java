@@ -118,7 +118,7 @@ public class Mag extends JPanel {
 	public Image getImage(String path) {
 		Image tempImage = null; 
 		try {
-			URL imageurl = Map.class.getResource(path); 
+			URL imageurl = Block.class.getResource(path); 
     	tempImage = Toolkit.getDefaultToolkit().getImage(imageurl); 
     	}
     	catch(Exception e){

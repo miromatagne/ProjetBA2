@@ -36,8 +36,6 @@ public class MouseForStatus implements MouseListener, Serializable {
 				status.getMouseController().setActiveObject(x,y);
 		a = x ;
 		b = y ;
-		status.setA(a);
-		status.setB(b);
 		System.out.println(a+b<=status.getActivePlayer().getInventory().size());
 			}
 			System.out.println(a+b<=status.getActivePlayer().getInventory().size());

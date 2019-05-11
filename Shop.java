@@ -18,7 +18,6 @@ import View.Window;
 
 public class Shop extends BlockUnbreakable implements Activable{ 
 	public Player active_player;
-	GameObject active_object;
 	public JFrame j = new JFrame("Shop");
 	public JPanel pan = new JPanel();
 	public JButton sb = new JButton("Sell");
@@ -98,12 +97,11 @@ public class Shop extends BlockUnbreakable implements Activable{
 	}
 	
 	public void Sell() {
-		GameObject a = active_object;
-		if(a instanceof SBableObject) {
-			active_player.getInventory().remove(a); 
-			active_player.setMoney(((SBableObject)a).getPrice()*80/100);
+		if(active_player.getActiveObject() instanceof SBableObject) {
+			active_player.getInventory().remove(active_player.getActiveObject()); 
+			active_player.setMoney(((SBableObject)active_player.getActiveObject()).getPrice()*80/100);
 			if(active_player.getInventory().size() != 0) {
-				active_object = active_player.getInventory().get(0);
+				active_player.setActiveObject(0,25);
 			}  // car celui-ci rest un active_object sans être ds l'invetaire...
 		}
 	}
@@ -150,7 +148,11 @@ public class Shop extends BlockUnbreakable implements Activable{
 		}
 		
 }
-	public void setActiveObject(GameObject o) {
-		this.active_object = o;
+	public void newMag() {
+		Mag m = new Mag(this);
 	}
+	/*public void setButtons() {
+		JButton sb = new JButton("Sell");
+		JButton bb = new JButton("Buy");
+	}*/
 }
