@@ -1,10 +1,10 @@
-/**  AStar: algorithme de plus chemin
+/**  AStar: algorithme de plus chemin, changement
  * 
  * Vous ne devez pas commprendre cet algorithm en detail. Vous pouvez simplement l'utiliser
  * de la facon suivante: 
  * 
  * -> on instancie un objet AStart avec la position de depart, la destination et la liste de obstacles.
- * -> on invoque la methode getNextStep pour avoir la direction à suivre lors du premier changement de
+ * -> on invoque la methode getNextStep pour avoir la direction Ã  suivre lors du premier changement de
  *    case. 0,1,2,3 correspondent restpectivement a Est, Nord, Ouest, Sud.
  * 
  * */
@@ -24,7 +24,7 @@ public class AStar {
 	private int DIAGONAL_COST = 100000;
 
 	public AStar(int xi, int yi, int xf, int yf, ArrayList<GameObject> objects) {
-		//Cette ArrayList correspond � une liste d'obstacles 
+		//Cette ArrayList correspond à une liste d'obstacles 
 		startI = xi;
 		startJ = yi;
 		//System.out.println(xi);
